@@ -384,7 +384,7 @@ const handleSubmit = async () =>{
           <buttton 
           onClick={handleSubmit}
           id = "subbutton"
-          class="bg-blue-700 text-white w-full hover:bg-blue-900 rounded-lg p-3 font-semibold  cursor-pointer"
+          class="bg-blue-700 w-full text-white flex items-center justify-center  hover:bg-blue-900 rounded-lg p-3 font-semibold  cursor-pointer"
         >Submit
         </buttton>
 
