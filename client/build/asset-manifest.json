@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.ba0ae72d.css",
-    "main.js": "/static/js/main.0950c901.js",
+    "main.css": "/static/css/main.06368055.css",
+    "main.js": "/static/js/main.95bf7f28.js",
     "static/js/461.9312df5c.chunk.js": "/static/js/461.9312df5c.chunk.js",
     "static/js/787.93763a76.chunk.js": "/static/js/787.93763a76.chunk.js",
     "static/media/hiringorange.jpeg": "/static/media/hiringorange.2d8e791480f2786b9466.jpeg",
@@ -9,18 +9,18 @@
     "static/media/hiringlightblue.jpeg": "/static/media/hiringlightblue.95463e502804f60e1724.jpeg",
     "static/media/hiringblue.jpeg": "/static/media/hiringblue.1bc42b0955a12948b4c4.jpeg",
     "static/media/hiring.jpeg": "/static/media/hiring.1a70cddc8c0420ce0658.jpeg",
-    "static/media/login2.png": "/static/media/login2.9c9914b70ae34b90191c.png",
     "static/media/hiringnow.jpeg": "/static/media/hiringnow.818933ec82d8f8ee215c.jpeg",
     "static/media/jointeam.jpeg": "/static/media/jointeam.b0daa97ce3f41ef93ed7.jpeg",
     "static/media/jobdekho.ico.png": "/static/media/jobdekho.ico.40297c893a72f91dad68.png",
+    "static/media/bgbig.svg": "/static/media/bgbig.6918153f38678372ceb14496fda9664c.svg",
     "index.html": "/index.html",
-    "main.ba0ae72d.css.map": "/static/css/main.ba0ae72d.css.map",
-    "main.0950c901.js.map": "/static/js/main.0950c901.js.map",
+    "main.06368055.css.map": "/static/css/main.06368055.css.map",
+    "main.95bf7f28.js.map": "/static/js/main.95bf7f28.js.map",
     "461.9312df5c.chunk.js.map": "/static/js/461.9312df5c.chunk.js.map",
     "787.93763a76.chunk.js.map": "/static/js/787.93763a76.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ba0ae72d.css",
-    "static/js/main.0950c901.js"
+    "static/css/main.06368055.css",
+    "static/js/main.95bf7f28.js"
   ]
 }
