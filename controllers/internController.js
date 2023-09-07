@@ -117,3 +117,44 @@ module.exports.getinternsbystring = async(req,res)=>{
         console.log(recordset)
     });
 }
+
+
+
+module.exports.checkinternexists = async(req,res)=>{
+    var sql = require("mssql");
+    var request = new sql.Request();
+   console.log(req.body)
+   const number = req.body.number;
+   const email = req.body.email;
+   try{
+       request.input('email', sql.VarChar, email);
+       request.input('number', sql.Numeric, number);
+
+       const usernumber = await request.query("Select * from Intern where number = @number")
+       const usernumberrecruiter = await request.query("Select * from Recruiter  where number = @number")
+       const useremail = await request.query("Select * from Intern where email = @email")
+       const userrecruiteremail = await request.query("Select * from Recruiter  where email = @email")
+         
+        if(usernumber.recordset[0])
+        {
+            return res.status(200).json({success: false})
+        }
+        else if(useremail.recordset[0]){
+            return res.status(200).json({success: false})
+        }
+        else if(userrecruiteremail.recordset[0]){
+            return res.status(200).json({success: false})
+        }
+        else if(usernumberrecruiter.recordset[0]){
+            return res.status(200).json({success: false})
+        }
+        else
+        {
+            return res.status(200).json({success: true})
+    }
+   // });
+}catch(e){
+   console.log(e)
+
+}
+};

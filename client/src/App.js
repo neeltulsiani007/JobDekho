@@ -1,12 +1,13 @@
 import './App.css';
 import { lazy, Suspense, useState } from 'react';
- import { AuthProvider } from './context/AuthProvider';
- import { Route, Routes } from 'react-router-dom';
- import { BrowserRouter } from 'react-router-dom';
- import { MuteContext } from './context/MuteProvider';
- import ChatProvider from './context/ChatProvider';
- import Loginpage from './Components/Loginpage';
- import  Title  from './Components/Title';
+import { AuthProvider } from './context/AuthProvider';
+import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { MuteContext } from './context/MuteProvider';
+import { UserContext } from './context/UserProvider';
+import ChatProvider from './context/ChatProvider';
+import Loginpage from './Components/Loginpage';
+import  Title  from './Components/Title';
 import  Internform  from './Components/Internform';
 import Recruitment from './Components/Recruitment';
 import Otpinput from './Components/Otpinput';
@@ -44,6 +45,9 @@ import MiniatureProfileTemplate from './Components/MiniatureProfileTemplate';
 // import Chatting from './Components/Chatting';
 // import SearchBar from './Components/SearchBar';
 import RecruiterProfiletemplate from './Components/RecruiterProfiletemplate';
+import Internformotpstep from './Components/Internformotpstep';
+import Internformmultistep from './Components/Internformmultistep';
+import Internformlast from './Components/Internformlast';
 
 
 const Home = lazy(() => import('./Components/Home'));
@@ -52,11 +56,13 @@ const Home = lazy(() => import('./Components/Home'));
 function App() {
 
   const [muted,setMuted] = useState(true)
+  const [user,setUser] = useState({});
 
   return (
 
     <div className='App'>
       <BrowserRouter>
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
       <AuthProvider>
         <ChatProvider>
         <MuteContext.Provider value={{ muted: muted, setMuted: setMuted }}>
@@ -66,6 +72,9 @@ function App() {
         <Route exact path='title' element={<Title />} /> 
         <Route exact path='internform' element={<Internform />} />
         <Route exact path='otpinput' element={<Otpinput />} />
+        <Route exact path='internformmultistep' element={<Internformmultistep  />} />
+        <Route exact path='internformotpstep' element={<Internformotpstep  />} />
+        <Route exact path='internformlast' element={<Internformlast  />} />
         <Route exact path='recruitmentform' element={<Recruitmentform />} />
         <Route exact path='recruitment' element={<Recruitment />} />
         <Route exact path='navbarintern' element={<NavbarIntern />} />
@@ -107,6 +116,7 @@ function App() {
       </MuteContext.Provider>
       </ChatProvider>
       </AuthProvider>
+      </UserContext.Provider>
       </BrowserRouter>
     </div>
   );

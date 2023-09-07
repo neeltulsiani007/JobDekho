@@ -15,11 +15,11 @@ const recruiterpostRoutes = require("./routes/recruiterpostRoutes")
 const chatRoutes = require("./routes/chatRoutes")
 const emailRoutes = require("./routes/emailRoutes")
  var cors = require('cors');
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   credentials: true,        //access-control-allow-credentials:true
-//   optionSuccessStatus: 200,
-// }
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,        //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+}
 
 
 const PORT = process.env.PORT || 4000;
@@ -27,15 +27,15 @@ const PORT = process.env.PORT || 4000;
 
  connect();
  app.use(cookieParser());
-//  app.use(cors(corsOptions));
+ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }))
-app.use(cors());
+// app.use(cors());
 
 
 
-// app.use("/uploads" , express.static("./uploads"))
-// app.use("/videos" , express.static("./videos"))
+app.use("/uploads" , express.static("./uploads"))
+app.use("/videos" , express.static("./videos"))
 app.use("/", internRoutes);
 app.use("/", recruiterRoutes);
 app.use("/", userRoutes);
@@ -49,7 +49,7 @@ app.use('/',chatRoutes);
 
 
 app.use(express.static("./client/build"));
-app.get("*",(re1,res)=>{
+app.get("*",(req,res)=>{
   res.sendFile(path.resolve(__dirname,"client","build","index.html"));
 });
 

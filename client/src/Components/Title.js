@@ -6,9 +6,9 @@ function Title()
 {
 const navigate = useNavigate();
   return (
-    <div className = "page1"  class ="flex font-sans py-64 h-screen w-screen items-center justify-center  bg-no-repeat bg-cover bg-zinc-200">
+    <div className = "page1"  class ="flex font-sans py-64  h-screen w-screen items-center justify-center  bg-no-repeat bg-cover bg-zinc-200">
     <br/> 
-    <div class="box-content py-20 px-10  shadow-lg shadow-black lg:p-48   bg-zinc-50">
+    <div class="box-content py-24 px-10  shadow-md shadow-zinc-400 lg:p-48 mt-12  bg-zinc-50">
     <h3 id="title" class = " text-center md:text-4xl text-3xl font-bold">What are you looking for ?<br></br>
     </h3>
     <div class="flex-row md:flex-col my-4 space-y-10 space-x-7   md:space-x-44 ">
@@ -17,7 +17,7 @@ const navigate = useNavigate();
      onClick={() => {navigate('/Recruitmentform');}}>Recruitment</button>
      <button id = "button_intern" 
      class=" text-blue-900  hover:bg-blue-950 rounded-lg hover:text-white w-40 h-14 font-serif  text-2xl border-2 border-neutral-900"
-      onClick={() => {navigate('/Internform');}}>Internship</button>
+      onClick={() => {navigate('/Internformmultistep');}}>Internship</button>
       </div>
       {/* <div class="flex-1 py-4 ">
      <p id = "alreadyuser"
@@ -27,6 +27,13 @@ const navigate = useNavigate();
      onClick={() => {navigate('/loginpage')}}>Click here to login.</span></p>
      </div> */}
     </div> 
+    <footer class="bg-white w-screen dark:bg-gray-800  top-0 absolute  shadow ">
+    <div class="w-full mx-auto w-screen-xl p-3 md:flex dark:text-gray-400 md:items-center md:justify-center">
+ <span 
+ onClick = {()=>{navigate('/')}}
+ class="font-semibold text-lg cursor-pointer">JobDekho</span>
+    </div>
+</footer>
     </div>
   )
 }

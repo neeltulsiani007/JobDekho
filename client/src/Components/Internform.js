@@ -7,7 +7,6 @@ import { AiFillHome } from "react-icons/ai";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { ToastContainer , toast } from 'react-toastify';
-import { getApp } from 'firebase/app';
 import baseUrl from '../baseUrl';
 
 
@@ -38,8 +37,6 @@ function Internform(){
 }
 
  useEffect(() => {
-
-   
 
   var firebaseConfig = {
     apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
@@ -89,7 +86,9 @@ function Internform(){
   }  
 
   const handleSubmit = async (e) =>{
+    if(e){
      e.preventDefault();
+    }
       setLoading(true)
     if(validate(name,age,skills,number,city,email,password)){
   
@@ -235,7 +234,6 @@ function Internform(){
   }
   return (
        <div class="font-sans  h-screen w-screen py-4 bg-gray-500" id="internform" >  
-       <div id = 'sign-in-button'></div>
         <AiFillHome  onClick={() => {setGotohomepage(true)}}
         class="cursor-pointer h-auto w-12 mx-12 "
         >

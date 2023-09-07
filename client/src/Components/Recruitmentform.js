@@ -178,7 +178,7 @@ function Recruitmentform()  {
   return (
     
       <div id = "recruitform1" class ="h-screen w-screen font-sans bg-gray-500">
-        <div id = 'sign-in-button'></div>
+        {/* <div id = 'sign-in-button'></div> */}
           <AiFillHome  onClick={() => {setGotohomepage(true)}}
         class="cursor-pointer h-auto w-12 mx-10 py-4 "
         >
