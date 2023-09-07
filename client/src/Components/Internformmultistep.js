@@ -45,14 +45,15 @@ function Internformmultistep(){
 
     useEffect(() => {
 
-        var firebaseConfig = {
-          apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
-          authDomain: "otp-function-f1bf6.firebaseapp.com",
-          projectId: "otp-function-f1bf6",
-          storageBucket: "otp-function-f1bf6.appspot.com",
-          messagingSenderId: "158018589085",
-          appId: "1:158018589085:web:9e919de6ca149332215f74"
-        };
+      const firebaseConfig = {
+        apiKey: "AIzaSyAeIiCS78T9YgBD_M5WgU6DyA6T9SIXny8",
+        authDomain: "full-stack-app-jd.firebaseapp.com",
+        projectId: "full-stack-app-jd",
+        storageBucket: "full-stack-app-jd.appspot.com",
+        messagingSenderId: "74278109526",
+        appId: "1:74278109526:web:464e28ab027e8a831096f7",
+        measurementId: "G-BN91NW4JJK"
+      };
       
         if(!firebase.apps.length){
         //   console.log("here")
