@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { stepNavbar } from '../assets/stepNavbar';
 import Tab from '../assets/tab';
 import background from './bgbig.svg'
+import backgroundsmall from './bgsmall.svg'
+
 import { UserContext } from '../context/UserProvider';
 
 
@@ -191,8 +193,24 @@ else{
       pauseOnHover
       theme="colored"
       />
-  <section class="border-red-500 bg-zinc-200 min-h-screen pt-12 flex items-center justify-center">
-   <div class="bg-white  flex  rounded-2xl  shadow-sm shadow-gray-400 lg:w-screen max-w-5xl">
+         <nav className="block lg:hidden">
+        <div className="bg-no-repeat bg-cover h-[15rem] flex items-center justify-center " 
+            style={{backgroundImage: `url(${backgroundsmall})`}}
+        >
+            {stepNavbar.map((step,index) => (
+              <div key={step.id}>
+                <Tab
+                  stepNo={step.stepNo}
+                  title=""
+                  message=""
+                  state={index === 0 ? "active" : ""}
+                />
+              </div>
+            ))}
+        </div>
+      </nav>
+  <section class="border-red-500  -mt-16 lg:-mt-0 bg-zinc-200 min-h-screen lg:pt-12 lg:flex lg:items-center justify-center">
+   <div class="bg-white  lg:flex   rounded-2xl  shadow-sm shadow-gray-400 lg:w-screen max-w-5xl">
       <div
       style={{ backgroundImage: `url(${background})` }}
       class="w-[30%] h-[695 px]  shadow-black border-[1px]   bg-no-repeat bg-cover rounded-lg lg:block hidden ">
@@ -213,7 +231,7 @@ else{
               </div>
       </div>
 
-      <div class="lg:w-[70%] px-5 h-full lg:pt-4 pt-4 ">
+      <div class="lg:w-[70%] w-auto lg:pb-0 pb-4  px-5 h-full lg:pt-4 pt-4  ">
         <h2 class="text-2xl font-bold font-[Arial] text-[#002D74]">Registration</h2>
         {/* <p class="text-sm mt-4 text-[#002D74]">Create an Intern Account !</p> */}
         <div class="bg-white  rounded px-8 pt-6  mb-4 flex flex-col mt-2">

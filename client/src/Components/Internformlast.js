@@ -1,19 +1,15 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom';
-import { useState , useEffect} from 'react';
-import firebase from 'firebase/compat/app';
+import {  useEffect} from 'react';
 import 'firebase/compat/auth';
 import { ToastContainer , toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import baseUrl from '../baseUrl';
-import axios from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { stepNavbar } from '../assets/stepNavbar';
 import Tab from '../assets/tab';
 import background from './bgbig.svg'
 import { useRef } from 'react';
 import {BiParty} from 'react-icons/bi'
-import { Button } from 'semantic-ui-react';
+import backgroundsmall from './bgsmall.svg'
 
 function Internformlast(){
 
@@ -52,7 +48,23 @@ function Internformlast(){
   
   return (
     <body class="max-h-screen">
-  <section class="border-red-500 pt-12 bg-zinc-200 min-h-screen flex items-center justify-center">
+           <nav className="block lg:hidden">
+        <div className="bg-no-repeat bg-cover h-[15rem] flex items-center justify-center " 
+            style={{backgroundImage: `url(${backgroundsmall})`}}
+        >
+            {stepNavbar.map((step,index) => (
+              <div key={step.id}>
+                <Tab
+                  stepNo={step.stepNo}
+                  title=""
+                  message=""
+                  state={index === 2? "active" : ""}
+                />
+              </div>
+            ))}
+        </div>
+      </nav>
+  <section class="border-red-500 -mt-16 lg:-mt-0 lg:pt-12 bg-zinc-200 min-h-screen lg:flex lg:items-center justify-center">
   <ToastContainer
       position="top-center"
       autoClose={1500}
@@ -65,7 +77,7 @@ function Internformlast(){
       pauseOnHover
       theme="colored"
       />
-   <div class="bg-white  flex  rounded-2xl h-[695px]  shadow-sm shadow-gray-400  lg:w-screen max-w-5xl">
+   <div class="bg-white  lg:flex  rounded-2xl h-[695px]  shadow-sm shadow-gray-400  lg:w-screen max-w-5xl">
       <div
       style={{ backgroundImage: `url(${background})` }}
       class="w-[30%] h-[695px]  shadow-black border-[1px]   bg-no-repeat bg-cover rounded-lg lg:block hidden ">
@@ -87,9 +99,9 @@ function Internformlast(){
      
       </div>
 
-      <div class="lg:w-[70%] px-5 h-full lg:pt-4 pt-4 flex flex-col items-center lg:justify-start    ">
+      <div class="lg:w-[70%] lg:px-5 h-full lg:pt-4 pt-4 flex flex-col items-center lg:justify-start   ">
               
-            <div class="text-3xl font-semibold mt-40 lg:mt-36 flex">
+            <div class="lg:text-3xl text-lg font-semibold mt-20 lg:mt-36 flex">
             <BiParty class="mr-2 mt-[2px]" />
               <BiParty class="mr-2 mt-[2px]" />
                 Congratulations!
@@ -101,10 +113,10 @@ function Internformlast(){
                 />
                 </div>
             <div
-            class="text-lg font-medium font-sans mt-16 lg:mt-20 flex"
+            class="text-lg font-medium font-sans mt-16 lg:mt-20 lg:flex"
             >Your account has been created successfully , you can now login with your credentials .</div>
             <div
-            class="text-lg font-sans font-medium mt-14 lg:mt-20 flex"
+            class="text-lg font-sans font-medium mt-14 lg:mt-20 lg:flex"
             >Click on the button below to return to Login page . </div>
             <div class="mt-10">
                 <button

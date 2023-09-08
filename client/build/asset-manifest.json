@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7633763a.css",
-    "main.js": "/static/js/main.e0394d78.js",
+    "main.css": "/static/css/main.cd3c9998.css",
+    "main.js": "/static/js/main.154687da.js",
     "static/js/461.9312df5c.chunk.js": "/static/js/461.9312df5c.chunk.js",
     "static/js/787.93763a76.chunk.js": "/static/js/787.93763a76.chunk.js",
     "static/media/hiringorange.jpeg": "/static/media/hiringorange.2d8e791480f2786b9466.jpeg",
@@ -12,15 +12,16 @@
     "static/media/hiringnow.jpeg": "/static/media/hiringnow.818933ec82d8f8ee215c.jpeg",
     "static/media/jointeam.jpeg": "/static/media/jointeam.b0daa97ce3f41ef93ed7.jpeg",
     "static/media/jobdekho.ico.png": "/static/media/jobdekho.ico.40297c893a72f91dad68.png",
+    "static/media/bgsmall.svg": "/static/media/bgsmall.7dde2b76dec0bcd939ad1ca16c9bffe6.svg",
     "static/media/bgbig.svg": "/static/media/bgbig.6918153f38678372ceb14496fda9664c.svg",
     "index.html": "/index.html",
-    "main.7633763a.css.map": "/static/css/main.7633763a.css.map",
-    "main.e0394d78.js.map": "/static/js/main.e0394d78.js.map",
+    "main.cd3c9998.css.map": "/static/css/main.cd3c9998.css.map",
+    "main.154687da.js.map": "/static/js/main.154687da.js.map",
     "461.9312df5c.chunk.js.map": "/static/js/461.9312df5c.chunk.js.map",
     "787.93763a76.chunk.js.map": "/static/js/787.93763a76.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7633763a.css",
-    "static/js/main.e0394d78.js"
+    "static/css/main.cd3c9998.css",
+    "static/js/main.154687da.js"
   ]
 }

@@ -12,6 +12,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserProvider';
 import { useContext } from 'react';
 import { ToastContainer , toast } from 'react-toastify';
+import backgroundsmall from './bgsmall.svg'
 
 function Internformotpstep(){
 
@@ -128,7 +129,23 @@ function Internformotpstep(){
 
   return (
     <body class="max-h-screen">
-  <section class="border-red-500 pt-12 bg-zinc-200 min-h-screen flex items-center justify-center">
+        <nav className="block lg:hidden">
+        <div className="bg-no-repeat bg-cover h-[15rem] flex items-center justify-center " 
+            style={{backgroundImage: `url(${backgroundsmall})`}}
+        >
+            {stepNavbar.map((step,index) => (
+              <div key={step.id}>
+                <Tab
+                  stepNo={step.stepNo}
+                  title=""
+                  message=""
+                  state={index === 1? "active" : ""}
+                />
+              </div>
+            ))}
+        </div>
+      </nav>
+  <section class="border-red-500 lg:-mt-0 -mt-16 lg:pt-12 bg-zinc-200 min-h-screen lg:flex lg:items-center justify-center">
   <ToastContainer
       position="top-center"
       autoClose={1500}
@@ -141,7 +158,7 @@ function Internformotpstep(){
       pauseOnHover
       theme="colored"
       />
-   <div class="bg-white   flex  rounded-2xl  shadow-sm shadow-gray-400 lg:w-screen  max-w-5xl">
+   <div class="bg-white   lg:flex  rounded-2xl  shadow-sm shadow-gray-400 lg:w-screen  max-w-5xl">
       <div
       style={{ backgroundImage: `url(${background})` }}
       class="w-[30%] h-[695px]  shadow-black border-[1px]   bg-no-repeat bg-cover rounded-lg lg:block hidden ">
@@ -183,7 +200,7 @@ function Internformotpstep(){
             type="text"
             id="otp1"
             autoFocus={true}
-            class="w-14 h-14 border-2 border-slate-900 text-center"
+            class="md:w-14 md:h-14 w-10 h-10 border-2 border-slate-900 text-center"
             autoComplete="off" 
             value={otp1}
             ref={num1}
@@ -193,7 +210,7 @@ function Internformotpstep(){
           <input
             id="otp2"
             name="otp2"
-            class="w-14 h-14 border-2 border-slate-900 text-center"
+            class="md:w-14 md:h-14 w-10 h-10 border-2 border-slate-900 text-center"
             type="text"
             autoComplete="off"
             autoFocus={false}
@@ -206,7 +223,7 @@ function Internformotpstep(){
           <input
 
             name="otp3"
-            class="w-14 h-14 border-2 border-slate-900 text-center"
+            class="md:w-14 md:h-14 w-10 h-10 border-2 border-slate-900 text-center"
             type="text"
             ref={num3}
             autoComplete="off"
@@ -220,7 +237,7 @@ function Internformotpstep(){
             name="otp4"
             type="text"
             ref={num4}
-            class="w-14 h-14 border-2 border-slate-900 text-center"
+            class="md:w-14 md:h-14 w-10 h-10 border-2 border-slate-900 text-center"
             autoComplete="off"
             autoFocus={false}
             value={otp4}
@@ -234,7 +251,7 @@ function Internformotpstep(){
             ref={num5}
             autoComplete="off"
             autoFocus={false}
-            class="w-14 h-14 border-2 border-slate-900 text-center"
+            class="md:w-14 md:h-14 w-10 h-10 border-2 border-slate-900 text-center"
             value={otp5}
             onChange={(e) =>{setOtp5(e.target.value);num6.current.focus()}}
             tabIndex="5" maxLength="1"
@@ -246,7 +263,7 @@ function Internformotpstep(){
             type="text"
             autoFocus={false}
             autoComplete="off"
-            class="w-14 h-14 border-2 border-slate-900 text-center"
+            class="md:w-14 md:h-14 w-10 h-10 border-2 border-slate-900 text-center"
             value={otp6}
             onChange={(e) =>{setOtp6(e.target.value);setOtpfinal(otp1+otp2+otp3+otp4+otp5+e.target.value)}}
             tabIndex="6" maxLength="1"
