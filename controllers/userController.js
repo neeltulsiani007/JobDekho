@@ -26,15 +26,15 @@ module.exports.insertuser = async (req,res)=>{
     const bcrypt = require("bcrypt")
     const jwt = require("jsonwebtoken")
     require('dotenv').config();
-    const {number,password} = req.body
-    console.log(number,password)
+    const {email,password} = req.body
+    console.log(email,password)
     var matchrecruiter = false;
     var matchintern = false;
     try{
-        request.input('number', sql.Numeric, number);
+        request.input('email', sql.VarChar, email);
         request.input('password', sql.VarChar, password);
-      const user = await request.query("Select * from Intern  where number = @number")
-      const userrecruiter = await request.query("Select * from Recruiter  where number = @number")
+      const user = await request.query("Select * from Intern  where email = @email")
+      const userrecruiter = await request.query("Select * from Recruiter  where email = @email")
 
       if (user.recordset[0]){
         console.log("INTERN")
@@ -42,7 +42,7 @@ module.exports.insertuser = async (req,res)=>{
         if (matchintern){
           const accessToken = jwt.sign({
             "name" : user.recordset[0].name,
-            "number" : user.recordset[0].number
+            "email" : user.recordset[0].email
           },
           process.env.ACCESS_TOKEN_SECRET,
           {expiresIn : '30m'}
@@ -50,13 +50,13 @@ module.exports.insertuser = async (req,res)=>{
            console.log(accessToken)
           const refreshToken = jwt.sign({
             "name" : user.recordset[0].name,
-            "number" : user.recordset[0].number
+            "email" : user.recordset[0].email
           },
           process.env.REFRESH_TOKEN_SECRET,
           {expiresIn : '1d'}
           );
           request.input('refreshtoken', sql.VarChar, refreshToken);
-          await request.query("update Intern set refreshtoken = @refreshtoken  where number = @number")
+          await request.query("update Intern set refreshtoken = @refreshtoken  where email = @email")
           // res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
           res.cookie('jwt', refreshToken , {maxAge: 24 * 60 * 60 * 1000 , httpOnly:true , sameSite:'None' , secure:true});
            res.json({accessToken ,typeuser: "intern"});
@@ -76,7 +76,7 @@ module.exports.insertuser = async (req,res)=>{
         {
          const accessToken = jwt.sign({
             "name" : userrecruiter.recordset[0].name,
-            "number" : userrecruiter.recordset[0].number
+            "email" : userrecruiter.recordset[0].email
           },
           process.env.ACCESS_TOKEN_SECRET,
           {expiresIn : '30m'}
@@ -85,14 +85,14 @@ module.exports.insertuser = async (req,res)=>{
            console.log(accessToken)
           const refreshToken = jwt.sign({
             "name" : userrecruiter.recordset[0].name,
-            "number" : userrecruiter.recordset[0].number
+            "email" : userrecruiter.recordset[0].email
           },
           process.env.REFRESH_TOKEN_SECRET,
           {expiresIn : '1d'}
           );
           request.input('refreshtoken', sql.VarChar, refreshToken);
           console.log(refreshToken)
-          await request.query("update Recruiter set refreshtoken = @refreshtoken  where number = @number")
+          await request.query("update Recruiter set refreshtoken = @refreshtoken  where email = @email")
           res.cookie('jwt',refreshToken, {httpOnly:true,sameSite:'None',secure:true, maxAge: 24 * 60 * 60 * 1000});
            res.json({accessToken,typeuser: "recruiter"});
          

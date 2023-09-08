@@ -123,7 +123,8 @@ module.exports.getinternsbystring = async(req,res)=>{
 module.exports.checkinternexists = async(req,res)=>{
     var sql = require("mssql");
     var request = new sql.Request();
-    const sendSms = require('../twilio');
+    // const sendSms = require('../twilio');
+    const sendOtpemail = require('../sendOtpemail');
    console.log(req.body)
    const number = req.body.number;
    const email = req.body.email;
@@ -156,10 +157,17 @@ module.exports.checkinternexists = async(req,res)=>{
             var otp = Math.floor(100000 + Math.random() * 900000)
             request.input('otp', sql.Numeric, otp);
             const message = 'Your Otp is '+otp;
-            numberformat = "+91"+number;
-            sendSms(numberformat , message );
-            const response = await request.query("insert into Userotp(number,otp) values(@number,@otp)");
+            const e = await sendOtpemail(email, "Verify Email", message);
+        if(e)
+        {
+            const response = await request.query("insert into Userotp(email,otp) values(@email,@otp)");
             return res.status(200).json({success: true})
+        }
+        else
+        {
+            return res.status(200).json({success: otpfailed})
+        }
+            
     }
    // });
 }catch(e){
@@ -174,13 +182,13 @@ module.exports.checkotp = async(req,res)=>{
     var sql = require("mssql");
     var request = new sql.Request();
    console.log(req.body)
-   const number = req.body.number;
+   const email = req.body.email;
    const otp = req.body.otp;
    try{
        request.input('otp', sql.Numeric, otp);
-       request.input('number', sql.Numeric, number);
+       request.input('email', sql.VarChar, email);
 
-         const response  = await request.query("select * from Userotp where number = @number and otp = @otp");
+         const response  = await request.query("select * from Userotp where email = @email and otp = @otp");
          if(response.recordset[0])
          {
             return res.status(200).json({success: true})

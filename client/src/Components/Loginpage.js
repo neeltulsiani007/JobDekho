@@ -1,6 +1,5 @@
 import useAuth from '../hooks/useAuth'
 import React from 'react'
-import { Form } from 'semantic-ui-react'
 import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import 'firebase/compat/auth';
@@ -15,7 +14,7 @@ function Loginpage(){
     const[Gotohomepage,setGotohomepage] = useState(false);
     const[showPassword,setShowPassword] = useState("password")
     const[Gotorecruitpage,setGotorecruitpage] = useState(false);
-    const[number,setNumber] = useState("")
+    const[email,setEmail] = useState("")
     const[loading , setLoading] = useState(false)
     const[password,setPassword] = useState("")
 
@@ -43,10 +42,10 @@ function Loginpage(){
   }
 
 
-  const validate = (values) =>{
-     if(!number)
+  const validate = (email,password) =>{
+     if(!email)
      {
-      toast.error("Number is required",{styles})
+      toast.error("Email is required",{styles})
       return false
      }
      if(!password)
@@ -61,11 +60,11 @@ function Loginpage(){
     {
       e.preventDefault();
       console.log("in osis")
-      if ((validate(number,password))){
+      if ((validate(email,password))){
         setLoading(true)
         const res = await axios.post(`${baseUrl}/checkuserexists`,
           {
-            number:number,
+            email:email,
             password:password
           },
           {
@@ -75,12 +74,12 @@ function Loginpage(){
       );
         console.log(res.data);
         if (res.data.success === false){
-         toast.error("Invalid Number or Password",{styles});
+         toast.error("Invalid E-mail or Password",{styles});
          setLoading(false);
         } else {
           // localStorage.setItem("user", JSON.stringify(res.data.user));
           const accessToken = res?.data?.accessToken;
-          setAuth({ number, password , accessToken });
+          setAuth({ email, password , accessToken });
           if(res.data.typeuser === "intern"){
           setGotorecruitpage(true)
           }
@@ -129,11 +128,11 @@ function Loginpage(){
         <p class="text-sm mt-4 text-[#002D74]">If you have an account, please login</p>
         <form class="mt-9"  method="POST">
           <div>
-            <label class="flex text-base font-sans font-semibold   text-gray-700">Mobile Number</label>
+            <label class="flex text-base font-sans font-semibold   text-gray-700">Email</label>
             <input
-              value={number}
-              onChange={(e)=>{setNumber(e.target.value)}}
-            type="email" name="" id="number" placeholder="Enter Mobile No ..." class="w-full border-[1px] border-zinc-400  px-4 py-3 rounded-lg bg-gray-100 mt-2 placeholder:text-sm  font-sans focus:border-blue-800 focus:bg-white focus:outline-none" autofocus autocomplete required />
+              value={email}
+              onChange={(e)=>{setEmail(e.target.value)}}
+            type="email" name="" id="email" placeholder="Enter E-mail ..." class="w-full border-[1px] border-zinc-400  px-4 py-3 rounded-lg bg-gray-100 mt-2 placeholder:text-sm  font-sans focus:border-blue-800 focus:bg-white focus:outline-none" autofocus autocomplete required />
           </div>
 
           <div class="mt-6">

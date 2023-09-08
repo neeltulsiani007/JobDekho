@@ -62,7 +62,7 @@ const handleSubmit = async () =>{
        styles
      })
   }
-  else{
+  else if(res.data.success === true){
     setUser({
       name:name,
       age:age,
@@ -73,6 +73,11 @@ const handleSubmit = async () =>{
       skills:skills
     })
     navigate('/Internformotpstep');
+}
+else{
+  toast.error("Email failed !",{
+    styles
+  })
 }
    }
    else
@@ -278,7 +283,7 @@ const handleSubmit = async () =>{
   <div class="-mx-3 md:flex mb-4">
     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
       <label class="flex uppercase tracking-wide text-grey-darker text-xs font-semibold mb-2" for="city">
-       City
+      City
       </label>
       <input
       value={city}

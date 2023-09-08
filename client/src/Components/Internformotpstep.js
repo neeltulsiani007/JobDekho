@@ -107,7 +107,7 @@ function Internformotpstep(){
     var code = otpfinal;
     console.log(code);
     const response = await axios.post(`${baseUrl}/checkotp`, {
-        number : user.number,
+        email : user.email,
         otp : code
       });
       if(response.data.success === true)
@@ -172,7 +172,7 @@ function Internformotpstep(){
       {/* <p class = "text-center mb-7  font-semibold ">Enter OTP</p> */}
       <div
       class="pb-14 text-lg font-semibold"
-      >A 6 digit OTP has been sent to your mobile number . Please enter the OTP to verify your account .</div>
+      >{`A 6 digit OTP has been sent to the email ` + user.email + " . "+ `Please enter the OTP to verify your account .`}</div>
       <div
       class = "text-black text-xl  font-semibold"
       >Enter OTP</div>
