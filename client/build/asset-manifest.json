@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.cd3c9998.css",
-    "main.js": "/static/js/main.154687da.js",
+    "main.css": "/static/css/main.6bd7630f.css",
+    "main.js": "/static/js/main.617e5552.js",
     "static/js/461.9312df5c.chunk.js": "/static/js/461.9312df5c.chunk.js",
     "static/js/787.93763a76.chunk.js": "/static/js/787.93763a76.chunk.js",
     "static/media/hiringorange.jpeg": "/static/media/hiringorange.2d8e791480f2786b9466.jpeg",
@@ -15,13 +15,13 @@
     "static/media/bgsmall.svg": "/static/media/bgsmall.7dde2b76dec0bcd939ad1ca16c9bffe6.svg",
     "static/media/bgbig.svg": "/static/media/bgbig.6918153f38678372ceb14496fda9664c.svg",
     "index.html": "/index.html",
-    "main.cd3c9998.css.map": "/static/css/main.cd3c9998.css.map",
-    "main.154687da.js.map": "/static/js/main.154687da.js.map",
+    "main.6bd7630f.css.map": "/static/css/main.6bd7630f.css.map",
+    "main.617e5552.js.map": "/static/js/main.617e5552.js.map",
     "461.9312df5c.chunk.js.map": "/static/js/461.9312df5c.chunk.js.map",
     "787.93763a76.chunk.js.map": "/static/js/787.93763a76.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cd3c9998.css",
-    "static/js/main.154687da.js"
+    "static/css/main.6bd7630f.css",
+    "static/js/main.617e5552.js"
   ]
 }

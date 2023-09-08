@@ -35,7 +35,7 @@ module.exports.insertuser = async (req,res)=>{
         request.input('password', sql.VarChar, password);
       const user = await request.query("Select * from Intern  where email = @email")
       const userrecruiter = await request.query("Select * from Recruiter  where email = @email")
-
+        console.log(userrecruiter.recordset)
       if (user.recordset[0]){
         console.log("INTERN")
         matchintern = await bcrypt.compare(password,user.recordset[0].password)
@@ -98,8 +98,13 @@ module.exports.insertuser = async (req,res)=>{
          
         }
         else {
+          console.log("inside failed")
           return res.status(200).json({success: false})
         }
+      }
+      else
+      {
+        return res.status(200).json({success: false})
       }
      
     }catch(e){

@@ -7,11 +7,13 @@ import { MuteContext } from './context/MuteProvider';
 import { UserContext } from './context/UserProvider';
 import ChatProvider from './context/ChatProvider';
 import Loginpage from './Components/Loginpage';
-import  Title  from './Components/Title';
-import  Internform  from './Components/Internform';
+import Title  from './Components/Title';
+import Internform  from './Components/Internform';
 import Recruitment from './Components/Recruitment';
 import Otpinput from './Components/Otpinput';
 import Recruitmentform from './Components/Recruitmentform';
+import Recruiterformmultistep1 from './Components/Recruiterformmultistep1';
+import Recruiterformmultistep2 from './Components/Recruiterformmultistep2';
 import NavbarIntern from './Components/NavbarIntern';
 import Gethired from './Components/Gethired';
 import Individualpost from './Components/Individualpost';
@@ -35,10 +37,7 @@ import InternProfilesetting from './Components/InternProfilesetting';
 import RecruiterChangePasswordsetting from './Components/RecruiterChangePasswordsetting';
 import RecruiterEmailVerifysetting from './Components/RecruiterEmailVerifysetting';
 import HirewithApplicants from './Components/HirewithApplicants';
-// import DisplayVideo from './Components/DisplayVideo';
-// import PostVideo from './Components/PostVideo';
 import Videoform from './Components/Videoform'
-// import Samplevideo from './Components/Samplevideo';
 import Post from './Components/Post';
 import FilterSidebar from './Components/FilterSidebar';
 import MiniatureProfileTemplate from './Components/MiniatureProfileTemplate';
@@ -48,6 +47,7 @@ import RecruiterProfiletemplate from './Components/RecruiterProfiletemplate';
 import Internformotpstep from './Components/Internformotpstep';
 import Internformmultistep from './Components/Internformmultistep';
 import Internformlast from './Components/Internformlast';
+import Recruiterformmultistep3 from './Components/Recruiterformmultistep3';
 
 
 const Home = lazy(() => import('./Components/Home'));
@@ -76,6 +76,9 @@ function App() {
         <Route exact path='internformotpstep' element={<Internformotpstep  />} />
         <Route exact path='internformlast' element={<Internformlast  />} />
         <Route exact path='recruitmentform' element={<Recruitmentform />} />
+        <Route exact path='recruitmentformmultistep1' element={<Recruiterformmultistep1 />} />
+        <Route exact path='recruitmentformmultistep2' element={<Recruiterformmultistep2 />} />
+        <Route exact path='recruitmentformmultistep3' element={<Recruiterformmultistep3 />} />
         <Route exact path='recruitment' element={<Recruitment />} />
         <Route exact path='navbarintern' element={<NavbarIntern />} />
         <Route exact path='gethired' element={<Gethired />} />    

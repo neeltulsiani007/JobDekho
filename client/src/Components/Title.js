@@ -14,7 +14,7 @@ const navigate = useNavigate();
     <div class="flex-row flex  my-4  space-x-7   md:space-x-36 ">
      <button id = "recruitbutton"
      class=" text-blue-800 hover:bg-blue-950 rounded-lg hover:text-white md:w-40 w-32 h-14 font-serif text-lg md:text-2xl border-2 border-neutral-900"
-     onClick={() => {navigate('/Recruitmentform');}}>Recruitment</button>
+     onClick={() => {navigate('/Recruitmentformmultistep1');}}>Recruitment</button>
      <button id = "button_intern" 
      class=" text-blue-900  hover:bg-blue-950 rounded-lg hover:text-white md:w-40 w-32 h-14 font-serif text-lg md:text-2xl border-2 border-neutral-900"
       onClick={() => {navigate('/Internformmultistep');}}>Internship</button>
