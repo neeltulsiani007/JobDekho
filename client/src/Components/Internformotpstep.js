@@ -5,15 +5,23 @@ import axios from '../api/axios';
 import { stepNavbar } from '../assets/stepNavbar';
 import Tab from '../assets/tab';
 import background from './bgbig.svg'
-import  { useState } from 'react';
-import { Form } from 'semantic-ui-react';
+import  { useState , useEffect } from 'react';
+// import { Form } from 'semantic-ui-react';
 import { useRef } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-// import { ToastContainer , toast } from 'react-toastify';
 import { UserContext } from '../context/UserProvider';
 import { useContext } from 'react';
+import { ToastContainer , toast } from 'react-toastify';
 
 function Internformotpstep(){
+
+  useEffect(() => {
+
+    setTimeout(() => {     
+      setResendDisabled(false);
+      }, 30000);
+  
+   },[]);
 
     const[otp1,setOtp1] = useState("")
     const[otp2,setOtp2] = useState("")
@@ -31,6 +39,7 @@ function Internformotpstep(){
     const num6 = useRef();
     const[loading,setLoading] = useState(false);
     const[loadingresend,setLoadingResend] = useState(false);
+    const[resenddisabled , setResendDisabled]= useState(true);
     const {user,setUser} = useContext(UserContext)
      var res;
 
@@ -40,36 +49,40 @@ function Internformotpstep(){
     {
       return <Navigate to="/internformlast" />
     }
-    // const showToastMessage = () => {
-    //     console.log("success called");
-    //     toast.success('OTP verified!', {
-    //       position: "top-center",
-    //       autoClose: 1500,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //       theme: "colored",
-    //       });
-    //       }
+    const showToastMessage = () => {
+        console.log("success called");
+        toast.success('OTP verified!', {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+          }
 
-          // const showerrorMessage = () => {
-          //   console.log("error toasted");
-          //   toast.error('Incorrect OTP', {
-          //     position: "top-center",
-          //     autoClose: 1500,
-          //     hideProgressBar: false,
-          //     closeOnClick: true,
-          //     pauseOnHover: true,
-          //     draggable: true,
-          //     progress: undefined,
-          //     theme: "colored",
-          //     });
-          //   }
+          const showerrorMessage = () => {
+            console.log("error toasted");
+            toast.error('Incorrect OTP', {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
+            }
+
+            
+ 
+
 
   const insertintern = async()=>{
-    
+
     const res = await axios.post(`${baseUrl}/insertintern`, {
      name:user.name,
      age:user.age,
@@ -81,40 +94,42 @@ function Internformotpstep(){
      });
     }
 
+    const handleResendClick =async()=>{
+   console.log("here in resend");
+    }
+
 
   const handleSubmit = async(e)=> {
     e.preventDefault();
     console.log(user)
     setLoading(true)
     console.log(otpfinal)
-    const code = otpfinal;
+    var code = otpfinal;
     console.log(code);
-    window.confirmationResult.confirm(code).then((result) => {
-    const usertemp = result.user;
-    console.log(JSON.stringify(usertemp));
-    //    res = await axios.post(`${baseUrl}/insertintern`, {
-    //  name:name,
-    //  age:age,
-    //  number:number,
-    //  city:city,
-    //  email:email,
-    //  password:password,
-    //  skills:skills
-    //  });
-    insertintern();
- 
-      setGobacktoform(true)
-    }).catch((error)=>{
-      alert("Incorrect otp")
-      console.log(error)
-      // showerrorMessage();
-    });
-  }
+    const response = await axios.post(`${baseUrl}/checkotp`, {
+        number : user.number,
+        otp : code
+      });
+      if(response.data.success === true)
+      {
+        showToastMessage();
+        insertintern();
+        setTimeout(() => {     
+        setGobacktoform(true)
+        }, 4000);
+      }
+      else
+      {
+      showerrorMessage();
+      setLoading(false)
+      }
+     }
+  
 
   return (
     <body class="max-h-screen">
   <section class="border-red-500 pt-12 bg-zinc-200 min-h-screen flex items-center justify-center">
-  {/* <ToastContainer
+  <ToastContainer
       position="top-center"
       autoClose={1500}
       hideProgressBar={false}
@@ -125,7 +140,7 @@ function Internformotpstep(){
       draggable
       pauseOnHover
       theme="colored"
-      /> */}
+      />
    <div class="bg-white   flex  rounded-2xl  shadow-sm shadow-gray-400 lg:w-screen  max-w-5xl">
       <div
       style={{ backgroundImage: `url(${background})` }}
@@ -266,12 +281,14 @@ function Internformotpstep(){
         </div>
       </form>
       <div class="flex items-center justify-center text-lg font-semibold   pt-20 ">
-            Didn't receive OTP ? , click below to resend OTP
+            Didn't receive OTP ? , click below to resend OTP (enabled after 30 seconds)
           </div>
           <div class="flex items-center justify-center  pt-8 ">
          {!loadingresend?
         <button id = "subbutton"
-        class="hover:bg-blue-700 hover:text-white text-blue-700 border border-blue-700 hover:border-none w-48  bg-white rounded-lg p-3 font-semibold  cursor-pointer"
+        disabled = {resenddisabled}
+        onClick={handleResendClick}
+        class={`hover:bg-blue-700  ${resenddisabled ? "cursor-not-allowed" :"cursor-pointer"}  hover:text-white text-blue-700 border border-blue-700 hover:border-none w-48  bg-white rounded-lg p-3 font-semibold `}
         >Resend OTP</button>
         :
         <button type="button"   

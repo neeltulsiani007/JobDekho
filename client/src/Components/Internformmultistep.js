@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useState , useEffect} from 'react';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/auth';
 import { ToastContainer , toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import baseUrl from '../baseUrl';
@@ -43,72 +43,13 @@ function Internformmultistep(){
 
     const navigate = useNavigate();
 
-    useEffect(() => {
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyAeIiCS78T9YgBD_M5WgU6DyA6T9SIXny8",
-        authDomain: "full-stack-app-jd.firebaseapp.com",
-        projectId: "full-stack-app-jd",
-        storageBucket: "full-stack-app-jd.appspot.com",
-        messagingSenderId: "74278109526",
-        appId: "1:74278109526:web:464e28ab027e8a831096f7",
-        measurementId: "G-BN91NW4JJK"
-      };
-      
-        if(!firebase.apps.length){
-        //   console.log("here")
-          firebase.initializeApp(firebaseConfig);
-          }
-          else
-          { 
-            firebase.app().delete().then(function() {
-              firebase.initializeApp(firebaseConfig);
-            });
-        //    console.log(firebase.apps.length)
-            // console.log("not here")
-          }
-       },[]);
-
-      //  useEffect(() => {
-      //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-      //         'size': 'invisible',
-      //       });
-      //  },[]);
-
-
-//   const configurecaptcha = () => 
-//   {
-//     console.log("here")
-//     if(!window.recaptchaVerifier){
-//   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-//     'size': 'invisible',
-//     'callback': (response) => {
-//      handleSubmit();
-//     } ,
-//   });
-// }
-// }
 
 const handleSubmit = async () =>{
   
     setLoading(true)
    if(validate(name,age,number,city,email,password,confirmpassword)){
-  //  res = await axios.post(`${baseUrl}/insertintern`, {
-  //    name:name,
-  //    age:age,
-  //    number:number,
-  //    city:city,
-  //    email:email,
-  //    password:password,
-  //    skills:skills
-  //    });
-  
-  //  if(res.data.success === false)
-  //  {
-  //    setLoading(false)
-  //    toast.error("User already exists",{
-  //      styles
-  //    })
+
    res = await axios.post(`${baseUrl}/checkinternexists`,{
      number:number,
      email:email,
@@ -121,7 +62,7 @@ const handleSubmit = async () =>{
        styles
      })
   }
-   else{
+  else{
     setUser({
       name:name,
       age:age,
@@ -131,26 +72,7 @@ const handleSubmit = async () =>{
       password:password,
       skills:skills
     })
-  //  configurecaptcha();
-  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-    'size': 'invisible',
-  });
-   const phoneNumber = "+91" + number;
-   console.log(phoneNumber);
-   const appVerifier = window.recaptchaVerifier;
-   firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-   .then((confirmationResult) => {
-   window.confirmationResult = confirmationResult;
-   console.log("Sent otp");
-   window.recaptchaVerifier.clear();
-   navigate('/Internformotpstep')
- }).catch((error) => {
-   console.log("Otp not sent")
-   console.log(error)
-   setLoading(false)
-   toast.error("Incorrect number",{styles})
-  //  deleteintern();
- });
+    navigate('/Internformotpstep');
 }
    }
    else
@@ -159,13 +81,6 @@ const handleSubmit = async () =>{
    }
  }
   
-   const deleteintern = async()=>{
-
-     res = await axios.post(`${baseUrl}/deleteintern`, {
-       number:number?.number,
-   });
-       console.log(res)
-   }
 
 
   const validate = (name,age,number,city,email,password,confirmpassword)=>
@@ -259,8 +174,19 @@ const handleSubmit = async () =>{
    
   return (
     <body class="max-h-screen">
+        <ToastContainer
+      position="top-center"
+      autoClose={1500}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+      />
   <section class="border-red-500 bg-zinc-200 min-h-screen pt-12 flex items-center justify-center">
-
    <div class="bg-white  flex  rounded-2xl  shadow-sm shadow-gray-400 lg:w-screen max-w-5xl">
       <div
       style={{ backgroundImage: `url(${background})` }}
@@ -407,10 +333,9 @@ const handleSubmit = async () =>{
        </form>  
 </div>
       </div>
-   
     </div>
-    <footer class="bg-white w-screen dark:bg-gray-800  top-0 absolute  shadow ">
-    <div class="w-full mx-auto w-screen-xl p-3   md:flex dark:text-gray-400 md:items-center md:justify-center">
+    <footer class=" w-screen bg-gray-800  top-0 absolute  shadow ">
+    <div class="w-full mx-auto w-screen-xl p-3 md:flex text-gray-400 md:items-center md:justify-center">
  <span 
  onClick = {()=>{navigate('/')}}
  class="font-semibold text-lg cursor-pointer">JobDekho</span>

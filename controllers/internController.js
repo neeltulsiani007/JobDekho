@@ -123,6 +123,7 @@ module.exports.getinternsbystring = async(req,res)=>{
 module.exports.checkinternexists = async(req,res)=>{
     var sql = require("mssql");
     var request = new sql.Request();
+    const sendSms = require('../twilio');
    console.log(req.body)
    const number = req.body.number;
    const email = req.body.email;
@@ -150,8 +151,45 @@ module.exports.checkinternexists = async(req,res)=>{
         }
         else
         {
+            
+            // console.log(Math.floor(100000 + Math.random() * 900000));
+            var otp = Math.floor(100000 + Math.random() * 900000)
+            request.input('otp', sql.Numeric, otp);
+            const message = 'Your Otp is '+otp;
+            numberformat = "+91"+number;
+            sendSms(numberformat , message );
+            const response = await request.query("insert into Userotp(number,otp) values(@number,@otp)");
             return res.status(200).json({success: true})
     }
+   // });
+}catch(e){
+   console.log(e)
+
+}
+};
+
+
+
+module.exports.checkotp = async(req,res)=>{
+    var sql = require("mssql");
+    var request = new sql.Request();
+   console.log(req.body)
+   const number = req.body.number;
+   const otp = req.body.otp;
+   try{
+       request.input('otp', sql.Numeric, otp);
+       request.input('number', sql.Numeric, number);
+
+         const response  = await request.query("select * from Userotp where number = @number and otp = @otp");
+         if(response.recordset[0])
+         {
+            return res.status(200).json({success: true})
+         }
+         else
+         {
+            return res.status(200).json({success: false})
+         }
+       
    // });
 }catch(e){
    console.log(e)
