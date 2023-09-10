@@ -123,12 +123,12 @@ function Post({post,likedpost}){
 
   return (
 
-    <div class="bg-gray-100 p-4 flex items-center justify-center">
-           <link
+    <div class="bg-gray-100 md:p-4 pt-4 flex items-center justify-center">
+           {/* <link
   rel="stylesheet"
   href="https://video-react.github.io/assets/video-react.css"
-/>
-    <div class="bg-white border max-w-xl md:max-w-2xl lg:max-w-none rounded-sm lg:w-1/2 md:w-1/2 xl:w-1/2 w-full shadow-lg">
+/> */}
+    <div class="bg-white border max-w-xl md:max-w-2xl lg:max-w-none w-full rounded-sm lg:w-1/2 md:w-2/3 xl:w-1/2  shadow-lg">
       <div class="flex items-center px-4 py-3"
       >
         {post.profilephoto?
@@ -155,10 +155,11 @@ function Post({post,likedpost}){
       <LazyLoad>
       <img
      className = "video-container" 
-      class="object-cover border-[1px] lg:h-[73vh] h-[64vh] w-full" 
+     onDoubleClick={handlelike}
+      class="object-cover md:border-[1px] lg:h-[73vh] h-[64vh] w-full" 
       src= {post.imagedata}
       alt="loading"
-      onClick={()=>{navigate(`/post/${post.postid}`)}}
+      // onClick={()=>{navigate(`/post/${post.postid}`)}}
       />
       </LazyLoad>
       </div>

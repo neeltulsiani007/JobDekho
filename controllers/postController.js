@@ -203,10 +203,10 @@ module.exports.users = async (req,res)=>{
     console.log("inside addcomments")
     const id = req.params.id;
     const comment = req.body.comment;
-    const date = moment(new Date()).format("YYYY-MM-DD");
+    const date = (new Date());
     console.log(req.user)
     console.log(req.number)
-    
+    console.log(date)
     const name = req.user;
     const number = req.number;
     request.input("number",sql.Numeric,number);
@@ -215,7 +215,7 @@ module.exports.users = async (req,res)=>{
     request.input("postid",sql.Numeric,id);
 
     request.input("name",sql.VarChar,name);
-    request.input("date",sql.Date,date);
+    request.input("date",sql.DateTime,date);
     request.input("comment",sql.VarChar,comment);
     console.log(id,comment,number,date,name)
     const comm = await request.query("select count(comment) as c from comments where postid = @postid")

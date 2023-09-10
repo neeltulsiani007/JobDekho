@@ -137,9 +137,8 @@ function Home()  {
         }
 
         getlikedpostdata();
-        getpostdata();
         getuserdata();
-       
+        getpostdata();
        
 
         document.getElementById("homebutton").style.backgroundColor = "rgb(17 24 39)"
