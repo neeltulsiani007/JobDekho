@@ -10,6 +10,8 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import LazyLoad from 'react-lazy-load';
 import { useContext } from 'react';
 import { MuteContext } from '../context/MuteProvider';
+import baseUrl from '../baseUrl';
+import defimg from './def.png';
 
 function Post({post,likedpost}){    
   
@@ -32,78 +34,90 @@ function Post({post,likedpost}){
     ));
   },[likedpost]);  
   
-  useEffect(() => {
-    console.log(muted)
-    if(post.filetype === "video"){
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        console.log("first")
-        setIsIntersecting(entry.isIntersecting);
-      },
-      { rootMargin: "0px" ,
-    threshold :0.8} 
-    );
-    console.log(isIntersecting);
+  // useEffect(() => {
+  //   console.log(muted)
+  //   if(post.filetype === "video"){
+  //     try{
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       console.log("first")
+  //       setIsIntersecting(entry.isIntersecting);
+  //     },
+  //     { rootMargin: "0px" ,
+  //   threshold :0.8} 
+  //   );
+  //   console.log(isIntersecting);
 
-    observer.observe(ref.current);
-    return () => {
-      console.log("finally third")
-      console.log(ref.current)
-      if(ref.current){
-      console.log("here")
-      console.log(ref.current.children[0].children[0].muted)
-      if(!ref.current.children[0].children[0].muted)
-      {
-        console.log("setting false")
-        setMuted(false)
-      }
-      else
-      {
-        console.log("setting true")
-        setMuted(true)
-      }
-      ref.current.children[0].children[0].pause();
-      } 
-      observer.disconnect();
-    }
-    } 
-  },[isIntersecting]);  
+  //   observer.observe(ref.current);
+  //   return () => {
+  //     console.log("finally third")
+  //     // console.log(ref.current)
+  //     if(ref.current){
+  //      console.log("here")
+  //     console.log(ref.current.children[0].children[0].muted)
+  //     if(  !ref.current.children[0].children[0].muted)
+  //     {
+  //       console.log("setting false")
+  //       setMuted(false)
+  //     }
+  //     else
+  //     {
+  //       console.log("setting true")
+  //       setMuted(true)
+  //     }
+  //     ref.current.children[0].children[0].pause();
+  //     } 
+  //     observer.disconnect();
+  //   }
+  //   } catch(e){console.log("error "+e);}
+  // }
+  // },[isIntersecting]);  
 
-  useEffect(()=>{
-    console.log("second")
-    console.log(muted + " at 73")
-    if (isIntersecting){
-    ref.current.children[0].children[0].play();
-    console.log("muted value is "+ muted)
-    } 
-    else{ 
-      console.log("here")
-      console.log(ref.current)
-    }
-  }, [isIntersecting,muted]);
+  // useEffect(()=>{
+  //   console.log("second")
+  //   console.log(muted + " at 73")
+  //   if (isIntersecting){
+  //   ref.current.children[0].children[0].play();
+  //   console.log("muted value is "+ muted)
+  //   } 
+  //   else{ 
+  //     console.log("here")
+  //     console.log(ref.current)
+  //   }
+  // }, [isIntersecting,muted]);
 
    const handlelike = async()=>
   {
-    const decoded = jwt_decode(auth.accessToken)
-    console.log(decoded.number)
-    const res = await axiosPrivate.post('http://localhost:4000/postlikes', {
+
+      if(!likedposts.includes(post.postid))
+      {
+        setLikes(likes+1)
+        setLikedposts([...likedposts,post.postid])
+      }
+      else
+      {
+    setLikes(likes-1)
+    let newlikedpost = likedposts.filter((num) => num !== post.postid);
+    setLikedposts([newlikedpost])
+      }
+
+    const res = await axiosPrivate.post(`${baseUrl}/postlikes`, {
     postid:post.postid,
-    number:decoded.number
   }, 
   {
     withCredentials:true
   });
-  if(res.data.liked)
-  {
-    setLikes(likes+1)
-    setLikedposts([...likedposts,post.postid])
-  }
-  else
-  {
-    setLikes(likes-1)
-    let newlikedpost = likedposts.filter((num) => num !== post.postid);
-    setLikedposts([newlikedpost])
-  }
+  // if(res.data.liked)
+  // {
+  //   setLikes(likes+1)
+  //   setLikedposts([...likedposts,post.postid])
+  // }
+  // else
+  // {
+  //   setLikes(likes-1)
+  //   let newlikedpost = likedposts.filter((num) => num !== post.postid);
+  //   setLikedposts([newlikedpost])
+  // }
   }
 
 
@@ -114,35 +128,35 @@ function Post({post,likedpost}){
   rel="stylesheet"
   href="https://video-react.github.io/assets/video-react.css"
 />
-    <div class="bg-white border rounded-sm lg:w-1/2 md:w-2/3 xl:w-1/2 w-full shadow-lg">
+    <div class="bg-white border max-w-xl md:max-w-2xl lg:max-w-none rounded-sm lg:w-1/2 md:w-1/2 xl:w-1/2 w-full shadow-lg">
       <div class="flex items-center px-4 py-3"
       >
         {post.profilephoto?
         <img class="h-8 w-8 rounded-full cursor-pointer"
         onClick={()=>{navigate(`/internprofile/${post.usernumber}`)}}
-        src={`http://localhost:4000/uploads/${post.profilephoto}`}  
+        src={`${post.profilephoto}`}  
          alt="loading ..."/>
          :
          <img class="h-8 w-8 rounded-full"
-        src={`http://localhost:4000/uploads/${photo}`}  
+        src={defimg}  
          alt="loading ..."/>
         }
         <div class="ml-3 ">
           <span
           onClick={()=>{navigate(`/internprofile/${post.usernumber}`)}}
-          class="text-sm cursor-pointer font-semibold antialiased font-sans block leading-tight">{post.username}</span>
+          class="text-sm cursor-pointer font-semibold antialiased font-sans flex justify-start  leading-tight">{post.username}</span>
           <span class="text-gray-600 text-xs font-sans block">{moment(post.date).format("DD-MM-YYYY")}</span>
         </div>
       </div>
 
       {post.filetype==="photo"?
-      <div className='min-h-[73vh]  w-full'
+      <div className='lg:min-h-[73vh] min-h-[64vh] w-full'
       >
       <LazyLoad>
       <img
      className = "video-container" 
-      class="object-cover h-[73vh] w-full" 
-      src={`http://localhost:4000/uploads/${post.imagedata}`} 
+      class="object-cover border-[1px] lg:h-[73vh] h-[64vh] w-full" 
+      src= {post.imagedata}
       alt="loading"
       onClick={()=>{navigate(`/post/${post.postid}`)}}
       />
@@ -157,11 +171,10 @@ function Post({post,likedpost}){
        <video
        muted = {muted}
        className = "video-container" 
-    class='object-cover h-[73vh] w-full'
+    class='object-cover  h-[73vh] w-full'
     controls 
-    src={`http://localhost:4000/videos/${post.imagedata}`} 
+    src={`${post.imagedata}`} 
     >
-
       </video>
       </LazyLoad>
       </div>
@@ -197,16 +210,16 @@ function Post({post,likedpost}){
       </div>
      
       {likes === 1?
-      <div class="font-semibold font-sans text-sm mx-4 mt-2 mb-2">{likes} like</div>
-      :<div class="font-semibold font-sans text-sm mx-4 mt-2 mb-2">{likes} likes</div>
+      <div class="font-semibold flex justify-start font-sans text-sm mx-4 mt-2 mb-1 ">{likes} like</div>
+      :<div class="font-semibold flex justify-start  font-sans text-sm mx-4 mt-2 mb-1">{likes} likes</div>
       }
-      <div class = "text-base font-sans mx-4 -mb-1  "><span class = "text-base text-black font-semibold font-sans mr-2">{post.username}</span>{post.caption}</div>
+      <div class = "text-base flex justify-start font-sans mx-4   "><span class = "text-base text-black font-semibold font-sans mr-2">{post.username}</span>{post.caption}</div>
       { 
       post.countcomments?
       <div className='mb-2'>
         <span
         onClick={()=>{navigate(`/comments/${post.postid}`)}}
-        class="text-base  mx-4 text-gray-400 cursor-pointer hover:text-gray-500 font-sans ">View all {post.countcomments } comments</span>
+        class="text-base flex justify-start   mx-4 text-gray-400 cursor-pointer hover:text-gray-500 font-sans ">View all {post.countcomments } comments</span>
       </div>
       :
       <div className='mb-3'></div>

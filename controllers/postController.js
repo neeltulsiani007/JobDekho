@@ -1,23 +1,30 @@
 
 module.exports.internpost = async(req,res)=>{
     var sql = require("mssql");
+    const cloudinary = require("../utils/cloudinary");
+       const upload = require("../utils/multer");
     var request = new sql.Request();
     const moment = require('moment')
-    console.log(req.body)
-    console.log(req.file)
+    try{
+    // console.log(req.body)
+    //  console.log(req.file)
     const name = req.user;
     const caption = req.body.caption
     const number = req.number;
- 
-    try{
-        const photo = req.file.filename;
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const photo= result.secure_url
+    const  cloudid= result.public_id
+
+        // const photo = req.file.filename;
         request.input('name', sql.VarChar, name);
         request.input('number', sql.Numeric, number);
         request.input('photo', sql.VarChar,photo);
         request.input('filetype', sql.VarChar,"photo");
         request.input('caption', sql.VarChar, caption);
+        request.input('cloudid', sql.VarChar, cloudid);
         const date = moment(new Date()).format("YYYY-MM-DD");
         request.input('DATE', sql.Date,date);
+
         const userintern = await request.query("Select * from Intern where number = @number")
         const userrecruiter = await request.query("Select * from Recruiter  where number = @number")
          
@@ -26,7 +33,7 @@ module.exports.internpost = async(req,res)=>{
             const pic = await request.query("select profilephoto as p from Intern where number  = @number")
             const  profile = pic.recordset[0].p;
             request.input('profile', sql.VarChar,profile);
-            await request.query("insert into postintern(filetype,username,usernumber,imagedata,caption,posttype,date,profilephoto) values (@filetype,@name,@number,@photo,@caption,'Intern',@date,@profile)",
+            await request.query("insert into postintern(filetype,username,usernumber,imagedata,caption,posttype,date,profilephoto,cloudid) values (@filetype,@name,@number,@photo,@caption,'Intern',@date,@profile,@cloudid)",
             function (err, recordset){
                 if (err) console.log(err)
                 res.send(recordset);
@@ -117,7 +124,7 @@ module.exports.users = async (req,res)=>{
     var sql = require("mssql");
     var request = new sql.Request();
         const  postid  = req.body.postid;
-        const number = req.body.number;
+        const number = req.number;
         console.log("here")
         console.log(number);
         request.input('number', sql.Numeric, number);
@@ -410,25 +417,77 @@ module.exports.getrecruiterpost = async (req,res)=>{
  };
 
 
+// module.exports.internvideo = async(req,res)=>{
+//     var sql = require("mssql");
+//     var request = new sql.Request();
+//     const moment = require('moment')
+//     console.log(req.body)
+//     console.log(req.file)
+//     const name = req.user;
+//     const caption = req.body.caption
+//     const number = req.number;
+ 
+//     try{
+//         const video = req.file.filename;
+//         request.input('name', sql.VarChar, name);
+//         request.input('number', sql.Numeric, number);
+//         request.input('video', sql.VarChar,video);
+//         request.input('filetype', sql.VarChar,"video");
+//         request.input('caption', sql.VarChar, caption);
+//         const date = moment(new Date()).format("YYYY-MM-DD");
+//         request.input('DATE', sql.Date,date);
+//         const userintern = await request.query("Select * from Intern where number = @number")
+//         const userrecruiter = await request.query("Select * from Recruiter  where number = @number")
+         
+//         if(userintern.recordset[0])
+//         {
+//             const pic = await request.query("select profilephoto as p from Intern where number  = @number")
+//             const  profile = pic.recordset[0].p;
+//             request.input('profile', sql.VarChar,profile);
+//             await request.query("insert into postintern(filetype,username,usernumber,imagedata,caption,posttype,date,profilephoto) values (@filetype,@name,@number,@video,@caption,'Intern',@date,@profile)",
+//             function (err, recordset){
+                
+//                 if (err) console.log(err)
+//                 res.send(recordset);
+//             });
+//         }
+
+//     }catch(e)
+//     {
+//         console.log(e); 
+//         return res.status(200).json({success: false,});
+       
+//     }
+// }
+
+
+
 module.exports.internvideo = async(req,res)=>{
     var sql = require("mssql");
+    const cloudinary = require("../utils/cloudinary");
+       const upload = require("../utils/multer");
     var request = new sql.Request();
     const moment = require('moment')
-    console.log(req.body)
-    console.log(req.file)
+    try{
     const name = req.user;
     const caption = req.body.caption
     const number = req.number;
- 
-    try{
-        const video = req.file.filename;
+    console.log("before result")
+    const result = await cloudinary.uploader.upload(req.file.path,{resource_type: "video", });
+    console.log(result)
+    const video= result.secure_url
+    const  cloudid= result.public_id
+
+        // const photo = req.file.filename;
         request.input('name', sql.VarChar, name);
         request.input('number', sql.Numeric, number);
         request.input('video', sql.VarChar,video);
         request.input('filetype', sql.VarChar,"video");
         request.input('caption', sql.VarChar, caption);
+        request.input('cloudid', sql.VarChar, cloudid);
         const date = moment(new Date()).format("YYYY-MM-DD");
         request.input('DATE', sql.Date,date);
+
         const userintern = await request.query("Select * from Intern where number = @number")
         const userrecruiter = await request.query("Select * from Recruiter  where number = @number")
          
@@ -437,9 +496,8 @@ module.exports.internvideo = async(req,res)=>{
             const pic = await request.query("select profilephoto as p from Intern where number  = @number")
             const  profile = pic.recordset[0].p;
             request.input('profile', sql.VarChar,profile);
-            await request.query("insert into postintern(filetype,username,usernumber,imagedata,caption,posttype,date,profilephoto) values (@filetype,@name,@number,@video,@caption,'Intern',@date,@profile)",
+            await request.query("insert into postintern(filetype,username,usernumber,imagedata,caption,posttype,date,profilephoto,cloudid) values (@filetype,@name,@number,@video,@caption,'Intern',@date,@profile,@cloudid)",
             function (err, recordset){
-                
                 if (err) console.log(err)
                 res.send(recordset);
             });
@@ -452,4 +510,3 @@ module.exports.internvideo = async(req,res)=>{
        
     }
 }
-

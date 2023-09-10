@@ -9,6 +9,8 @@ import { useEffect , useState} from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate } from 'react-router-dom'
+import baseUrl from '../baseUrl'
+import homebaseUrl from '../homebaseUrl'
 
 function classNames(...classes) {
 
@@ -18,6 +20,7 @@ function classNames(...classes) {
 export default function NavbarIntern(type) {
 
   const [user,setUser] =  useState([]);
+  const[openpost , setOpenPost] = useState(false);
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
 
@@ -26,7 +29,7 @@ export default function NavbarIntern(type) {
 
     
     const getuserprofile = async()=>{
-   await axiosPrivate.get("http://localhost:4000/getuserprofile",
+   await axiosPrivate.get(`${baseUrl}/getuserprofile`,
    {
     withCredentials:true
    }).then((response) => {
@@ -40,11 +43,21 @@ getuserprofile();
 
 
 const navigation = [
-  { name: 'Home', href: 'http://localhost:3000/home', current:true ,id:"homebutton" },
-  { name: 'Get Hired', href: 'http://localhost:3000/gethiredwithpost', current:false ,id:"gethiredbutton"},
-  { name: 'Offers', href: 'http://localhost:3000/users', current:false ,id:"projectsbutton"},
-  // { name: 'Post', href: 'http://localhost:3000/postform', current:false ,id:"postbutton"},
+  { name: 'Home', href: `${homebaseUrl}/home`, current:true ,id:"homebutton" },
+  { name: 'Get Hired', href: `${homebaseUrl}/gethiredwithpost`, current:false ,id:"gethiredbutton"},
+  { name: 'Offers', href: `${homebaseUrl}/users`, current:false ,id:"projectsbutton"},
+  //  { name: 'Post', href: `${homebaseUrl}/postform`, current:false ,id:"postbutton"},
 ]
+
+const postnavigation = [
+
+    { name: 'Photo', href: `${homebaseUrl}/postform`, current:false ,id:"photobutton"},
+    { name: 'Video', href: `${homebaseUrl}/videoform`, current:false ,id:"videobutton"},
+]
+
+const handlePostClick = ()=>{
+  setOpenPost(!openpost);
+}
   return (
 
 
@@ -92,7 +105,9 @@ const navigation = [
                       <Menu as="div" className="relative ">
                   <div>
                 
-                    <Menu.Button  id="postbutton"  className= 'font-sans hover:bg-gray-700 hover:text-white focus:bg-gray-800 flex gap-1 rounded-md  px-3 py-2 text-sm font-medium text-gray-400'>
+                    <Menu.Button 
+                    // aria-current={false ? 'page' : undefined}
+                    id="postbutton"  className= 'font-sans hover:bg-gray-700 hover:text-white focus:bg-gray-800 flex gap-1 rounded-md  px-3 py-2 text-sm font-medium text-gray-400'>
                       <span className="sr-only">Open user menu</span>
                      Post
                     </Menu.Button>
@@ -142,7 +157,7 @@ const navigation = [
                 </Menu>
                       {/* <Link
                         key={"Post"}
-                         to={ 'http://localhost:3000/postform'}
+                         to={ `/postform`}
                          id = {"postbutton"}
                          className={classNames(
                           'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
@@ -185,7 +200,7 @@ const navigation = [
                   <span className="sr-only">Chatting</span>
                   <BsChatLeft
                   onClick={()=>{navigate('/chatting')}}
-                  className="h-6 w-6 pt-1" aria-hidden="true" />
+                  className="h-6 w-6 pt-1 md:block hidden" aria-hidden="true" />
                 </button>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-2 sm:pr-0">
                 <button
@@ -203,8 +218,8 @@ const navigation = [
                       <span className="sr-only">Open user menu</span>
                       {user.profilephoto?
                       <img
-                        className="h-10 w-10 rounded-full"
-                        src={`http://localhost:4000/uploads/${user.profilephoto}`}    
+                        className="h-10 w-10 object-cover rounded-full"
+                         src={`${user.profilephoto}`}    
                         alt=""
                       />
                       :
@@ -279,7 +294,7 @@ const navigation = [
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden">
+          <Disclosure.Panel className={`sm:hidden `}>
             <div className="space-y-2 px-2 pt-2 pb-3">
               {navigation.map((item) => (
                 <Disclosure.Button
@@ -294,6 +309,40 @@ const navigation = [
                 >
                   {item.name}
                 </Disclosure.Button>
+                
+              ))}
+               <button
+                  key={"Post"}
+                  as="a"
+                  onClick={handlePostClick}
+                  className={classNames(
+                    `text-gray-300 ${openpost?"bg-gray-700 text-white":""}  items-center justify-center w-full  hover:text-white block rounded-md px-3 py-2 text-base font-medium`
+                  )}
+                  aria-current={false ? 'page' : undefined}
+                >
+                  {"Post"}
+                </button>
+                {postnavigation.map((item) => (
+                <Disclosure.Button
+                  key={item.name}
+                  as="a"
+                  href={item.href}
+                  id={item.id}
+                  className={classNames(
+                    `text-white flex items-center justify-center ${!openpost&&"hidden"} border-2 hover:bg-gray-700 hover:text-gray-200 block rounded-md px-3 py-2 text-base font-medium`
+                  )}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.name}
+                  <CameraIcon 
+                        class=  {`h-5 w-5 ml-2 ${item.name=="Photo"?"":"hidden"}`}
+                        />
+                        <VideoCameraIcon
+                        class=  {`h-5 w-5 ml-2 ${item.name=="Video"?"":"hidden"}`}
+                   />
+
+                </Disclosure.Button>
+                
               ))}
             </div>
           </Disclosure.Panel>

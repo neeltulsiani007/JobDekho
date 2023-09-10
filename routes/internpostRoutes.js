@@ -1,55 +1,56 @@
 const app = require('express');
 const router = app.Router();
-const multer = require("multer")
+const upload = require("../utils/multer");
+const uploadvideo = require("../utils/multervideo")
 const {internpost,getpost,postlikes,updatelikes,individualpost, getcomments, addcomments, internvideo, getpostsbyoffset} = require("../controllers/postController")
 
 var jwtverification = require("../middleware/jwtverification")
 
-var imgconfig = multer.diskStorage({
+// var imgconfig = multer.diskStorage({
 
-  destination:(req,file,callback)=>{
+//   destination:(req,file,callback)=>{
 
-    callback(null,"./uploads");
+//     callback(null,"./uploads");
 
-  },
-   filename:(req,file,callback)=>{
-     callback(null,`image-${Date.now()}.${file.originalname}`)
-   }
-});
+//   },
+//    filename:(req,file,callback)=>{
+//      callback(null,`image-${Date.now()}.${file.originalname}`)
+//    }
+// });
 
-var secondimgconfig = multer.diskStorage({
+// var secondimgconfig = multer.diskStorage({
 
-  destination:(req,file,callback)=>{
-    callback(null,"./videos");
-  },
-   filename:(req,file,callback)=>{
-     callback(null,`video-${Date.now()}.${file.originalname}`)
-   }
+//   destination:(req,file,callback)=>{
+//     callback(null,"./videos");
+//   },
+//    filename:(req,file,callback)=>{
+//      callback(null,`video-${Date.now()}.${file.originalname}`)
+//    }
 
-});
+// });
 
-const isImage = (req,file,callback) =>{
+// const isImage = (req,file,callback) =>{
 
-  if(file.mimetype.startsWith("image")){
-    callback(null,Error("only image is allowed"))
-  }
-}
-const isVideo = (req,file,callback) =>{
+//   if(file.mimetype.startsWith("image")){
+//     callback(null,Error("only image is allowed"))
+//   }
+// }
+// const isVideo = (req,file,callback) =>{
 
-  if(file.mimetype.startsWith("video")){
-    callback(null,Error("only video is allowed"))
-  }
-}
+//   if(file.mimetype.startsWith("video")){
+//     callback(null,Error("only video is allowed"))
+//   }
+// }
 
-var upload = multer({
-    storage:imgconfig,
-    fileFilter:isImage
-})
+// var upload = multer({
+//     storage:imgconfig,
+//     fileFilter:isImage
+// })
 
-var uploadvideo = multer({
-  storage:secondimgconfig,
-  fileFilter:isVideo
-})
+// var uploadvideo = multer({
+//   storage:secondimgconfig,
+//   fileFilter:isVideo
+// })
    
 router.post("/internpost",jwtverification, upload.single("photo"),internpost)
 router.post("/internvideo",jwtverification, uploadvideo.single("video"),internvideo)

@@ -136,9 +136,10 @@ function Home()  {
             }
         }
 
+        getlikedpostdata();
         getpostdata();
         getuserdata();
-        getlikedpostdata();
+       
        
 
         document.getElementById("homebutton").style.backgroundColor = "rgb(17 24 39)"
@@ -198,14 +199,14 @@ function Home()  {
                     </ul>
                 ): <p></p>
             }
-       {isloading && <div>
+       {isloading && <div className='flex h-screen -mt-12   items-center justify-center'>
             <Oval
                 height="80" 
                 width="80" 
                 radius="9"
                 color="black" 
                  wrapperStyle={{
-                 marginLeft:"45%",
+
                 }}
               />
               </div>
