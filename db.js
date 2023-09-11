@@ -53,7 +53,7 @@ var sql = require('mssql');
 // }
 
 const connect = ()=>{
-    sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:jd-server.database.windows.net,1433;Database=jd-db;Uid=jd-neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=Yes;Connection Timeout=30;",  function (err) {
+    sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:server-full-stack-jd.database.windows.net,1433;Database=jd-databse;Uid=neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
         
         if (err) {console.log(err)};
         console.log('DB Connected');
