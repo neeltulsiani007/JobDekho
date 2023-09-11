@@ -1,5 +1,5 @@
 
-var sql = require("mssql");
+
 
 // const config ={
 //     user: 'SA',
@@ -13,14 +13,51 @@ var sql = require("mssql");
 //         enableArithAbort: true,
 //     },
 // }
-
-
-const connect = ()=>{
-sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:projectjd.database.windows.net,1433;Database=Project1;Uid=neel;Pwd={Omsairam007!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
+// const config ={
+//     user: 'sql12645651',
+//     port :3306,
+//     password: 'AG8ZeUSj4v',
+//     database: 'sql12645651',
+//     server: 'sql12.freemysqlhosting.net',
     
-    if (err) {console.log(err)};
-    console.log('DB connected');
-})
-}
+//     options:{
+//         trustServerCertificate: true,
+//         trustedConnection: false,
+//         enableArithAbort: true,
+//     },
+// }
+var sql = require('mssql');
+
+// var con = mysql.createConnection({
+//     host: 'sql12.freemysqlhosting.net',
+//     user: 'sql12645651',
+//     port :3306,
+//     password: 'AG8ZeUSj4v',
+//     database: 'sql12645651',
+// });
+
+//  const connect  = ()=>{ con.connect(function(err) {
+//   if (err) throw err;
+//   console.log(" DB Connected!");
+// });
+//  }
+
+
+// const connect = ()=>{
+// sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:projectjd.database.windows.net,1433;Database=Project1;Uid=neel;Pwd={Omsairam007!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
+    
+//     if (err) {console.log(err)};
+//     console.log('DB connected');
+// })
+// }
+const connect = ()=>{
+    sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:jd-server.database.windows.net,1433;Database=jd-db;Uid=jd-neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
+        
+        if (err) {console.log(err)};
+        console.log('DB connected');
+    })
+    }
+
+
 module.exports = connect;
 
