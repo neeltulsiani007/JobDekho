@@ -26,6 +26,7 @@
 //         enableArithAbort: true,
 //     },
 // }
+
 var sql = require('mssql');
 
 // var con = mysql.createConnection({
@@ -50,11 +51,12 @@ var sql = require('mssql');
 //     console.log('DB connected');
 // })
 // }
+
 const connect = ()=>{
-    sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:jd-server.database.windows.net,1433;Database=jd-db;Uid=jd-neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
+    sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:jd-server.database.windows.net,1433;Database=jd-db;Uid=jd-neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=Yes;Connection Timeout=30;",  function (err) {
         
         if (err) {console.log(err)};
-        console.log('DB connected');
+        console.log('DB Connected');
     })
     }
 

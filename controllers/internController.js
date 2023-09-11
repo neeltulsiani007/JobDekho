@@ -131,12 +131,12 @@ module.exports.checkinternexists = async(req,res)=>{
    try{
        request.input('email', sql.VarChar, email);
        request.input('number', sql.Numeric, number);
-
+        console.log("before check intern")
        const usernumber = await request.query("Select * from Intern where number = @number")
        const usernumberrecruiter = await request.query("Select * from Recruiter  where number = @number")
        const useremail = await request.query("Select * from Intern where email = @email")
        const userrecruiteremail = await request.query("Select * from Recruiter  where email = @email")
-         
+         console.log("after check intern ")
         if(usernumber.recordset[0])
         {
             return res.status(200).json({success: false})
