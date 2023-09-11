@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.8961a10b.css",
-    "main.js": "/static/js/main.040b4113.js",
+    "main.js": "/static/js/main.04a0b43c.js",
     "static/js/461.30768abf.chunk.js": "/static/js/461.30768abf.chunk.js",
     "static/js/787.93763a76.chunk.js": "/static/js/787.93763a76.chunk.js",
     "static/media/hiringorange.jpeg": "/static/media/hiringorange.2d8e791480f2786b9466.jpeg",
@@ -16,12 +16,12 @@
     "static/media/bgbig.svg": "/static/media/bgbig.6918153f38678372ceb14496fda9664c.svg",
     "index.html": "/index.html",
     "main.8961a10b.css.map": "/static/css/main.8961a10b.css.map",
-    "main.040b4113.js.map": "/static/js/main.040b4113.js.map",
+    "main.04a0b43c.js.map": "/static/js/main.04a0b43c.js.map",
     "461.30768abf.chunk.js.map": "/static/js/461.30768abf.chunk.js.map",
     "787.93763a76.chunk.js.map": "/static/js/787.93763a76.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8961a10b.css",
-    "static/js/main.040b4113.js"
+    "static/js/main.04a0b43c.js"
   ]
 }

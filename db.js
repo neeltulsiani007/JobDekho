@@ -1,6 +1,6 @@
 
 
-
+const sql = require('mssql');
 // const config ={
 //     user: 'SA',
 //     password: 'Password123',
@@ -27,7 +27,7 @@
 //     },
 // }
 
-var sql = require('mssql');
+
 
 // var con = mysql.createConnection({
 //     host: 'sql12.freemysqlhosting.net',

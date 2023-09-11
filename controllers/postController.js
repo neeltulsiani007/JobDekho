@@ -12,6 +12,7 @@ module.exports.internpost = async(req,res)=>{
     const caption = req.body.caption
     const number = req.number;
     const result = await cloudinary.uploader.upload(req.file.path);
+    console.log(result)
     const photo= result.secure_url
     const  cloudid= result.public_id
 

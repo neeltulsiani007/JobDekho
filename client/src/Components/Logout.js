@@ -1,6 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
  import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import baseUrl from '../baseUrl';
 
 
 function Logout()
@@ -12,7 +13,7 @@ const [type,setType] = useState("");
 useEffect(() => {
 
   const getusertype = async()=>{
-   await axiosPrivate.get("http://localhost:4000/getusertype",
+   await axiosPrivate.get(`${baseUrl}/getusertype`,
    {
     withCredentials:true
    }).then((response) => {
