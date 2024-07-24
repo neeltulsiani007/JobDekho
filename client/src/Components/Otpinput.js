@@ -117,7 +117,6 @@ function Otpinput(){
             ref={num2}
             onChange={(e) =>{setOtp2(e.target.value);num3.current.focus()}}
             tabIndex="2" maxLength="1" 
-
           />
           <input
 

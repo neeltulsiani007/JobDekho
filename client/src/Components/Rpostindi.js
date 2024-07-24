@@ -1,4 +1,5 @@
-import React, { useEffect , useState } from 'react'
+import React, { useEffect , useState  } from 'react'
+import { useParams } from 'react-router-dom'
 import Announcement from './recruiterpostphotos/hiringblue.jpeg'
 import Announcement1 from './recruiterpostphotos/hiring.jpeg'
 import Announcement2 from './recruiterpostphotos/hiringlightblue.jpeg'
@@ -14,15 +15,16 @@ import { useNavigate } from 'react-router-dom'
 import logo from './def.png'
 
 
-function Recruiterposttemplate({post,appliedpost}) {
+function Rpostindi() {
+
   const[description,setDescription] = useState(false)
   const [text,setText] = useState("View Description")
   const [skills,setSkills] = useState([]);
   const [user,setUser] = useState({});
-  const [applicants,setApplicants] = useState(post.numberofapplicants)
-  const[appliedlist,setAppliedlist] = useState([appliedpost])
+  const { postid } = useParams();
   const [modalopen , setModalOpen] = useState(false)
   const navigate = useNavigate();
+  const[post , setPost]= useState({})
   
   const styles = {
     position: "top-center",
@@ -35,78 +37,40 @@ function Recruiterposttemplate({post,appliedpost}) {
     theme: "colored"
   }
 
-
   const axiosPrivate = useAxiosPrivate();
+
   useEffect(() => {
 
-     
-    const getuserprofile = async()=>{
-      await axiosPrivate.get("http://localhost:4000/getuser",
-      {
-       withCredentials:true
-      }).then((response) => {
-         console.log(response.data.recordset[0]);
-         setUser(response.data.recordset[0]);
-       }); 
-   }
-
-   getuserprofile();
-      try{
-     setSkills(post.skills.split(","));
-    console.log(appliedpost)
-    setAppliedlist(appliedpost.map(function (obj) {
-      return obj.postid;
+    const getapplicantsdata = async() =>{
+        try {
+            const response = await axiosPrivate.post('/getrpostbyid',
+                {
+                    postid:postid,
+                } ,
+                {
+                withCredentials:true
+            });
+            console.log("here",(response.data.recordset[0]));
+            setPost(response.data.recordset[0]);
+            setSkills(response.data.recordset[0].skills.split(','))
+        } catch (err){
+            console.error(err);
+        }
     }
-    ));
-  }catch(e)
-  {
-    console.log(e)
-  // toast.error("Error loading page ! Try again later .",styles)
-  }
 
-  },[appliedpost,post.skills]);
+    getapplicantsdata();
+   
+
+  },[axiosPrivate ,postid]);
 
    
 
-  const handleApply = async() =>{
-
-    console.log(user.verified)
-     if(user.verified == null)
-     {
-      console.log("not verified")
-      toast.error("Verify Number in settings to apply.",{styles})
-
-     }
-    
-     else
-     {
-
-      const res = await axiosPrivate.post('http://localhost:4000/postapplicants', {
-      postid:post.postid,
-    }, 
-    {
-      withCredentials:true
-    });
-    if(res.data.liked)
-    {
-      setApplicants(applicants+1)
-
-      setAppliedlist([...appliedpost,post.postid])
-    }
-    else
-    {
-      setApplicants(applicants-1)
-
-      let newappliedpost = appliedlist.filter((num) => num !== post.postid);
-      setAppliedlist([newappliedpost])
-    }
-  }
-  }
+  
 
   const images = [Announcement,Announcement1,Announcement2,Announcement3,Announcement4,Announcement5,Announcement6]
    
   return (
-      <div class="bg-gray-100  p-4 flex items-center justify-center">
+      <div class="bg-gray-100 h-[calc(100dvh)]  p-4 flex items-center justify-center">
         <ToastContainer
       position="top-center"
       autoClose={1500}
@@ -119,7 +83,7 @@ function Recruiterposttemplate({post,appliedpost}) {
       pauseOnHover
       theme="colored"
       />
-       <div id="default-modal" tabindex="-1"  class={`${!modalopen && "hidden"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0  h-full`}>
+       <div id="default-modal" tabindex="-1"  class={`${!modalopen && "hidden"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0  `}>
     <div class="relative  p-4 w-full max-w-2xl max-h-full">
 
         <div class="relative text-white bg-gray-700 rounded-lg shadow  pb-3" >
@@ -180,7 +144,7 @@ function Recruiterposttemplate({post,appliedpost}) {
     <div class="flex text-center items-center justify-center  text-2xl text-slate-700 font-sans font-semibold py-3">
         <BiParty
         class="mx-3" />
-        <span class="text-center">{post.cname[0].toUpperCase() + post.cname.substring(1,post.cname.length)} is looking for Interns !</span>
+        <span class="text-center">{post.cname} is looking for Interns !</span>
         <BiParty
         class="mx-3" />
     </div>
@@ -208,20 +172,7 @@ function Recruiterposttemplate({post,appliedpost}) {
     <div
     onClick={()=>{setModalOpen(true)}}
     class="font-sans flex px-4 cursor-pointer hover:underline  text-blue-700">See all</div>
-    <div class=" flex gap-5 px-4 text-lg text-slate-700 font-Georgia font-semibold py-2 mt-1">
-    <svg 
     
-    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-check  " viewBox="0 0 16 16">
-  <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-      </svg>
-       <span class="-mx-2 -my-1 font-sans">
-        Last date to apply is <span class="text-lg">{post.lastdatetoapply.substring(8,10) + "-"
-         + post.lastdatetoapply.substring(5,7) + "-" + 
-         post.lastdatetoapply.substring(0,4)}  .
-         </span>
-           </span>
-           </div>
         <div class="flex gap-5 text-lg font-sans font-medium px-4 mb-3 pt-1 ">
         Click on the button below to apply for the internship
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -241,29 +192,19 @@ function Recruiterposttemplate({post,appliedpost}) {
   <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
   <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
 </svg>
-      {applicants===1?
+      {post.numberofapplicants===1?
       <span class="-mx-3">1 applicant</span>
       :
-      <span class="-mx-3">{applicants} applicants</span>
+      <span class="-mx-3">{post.numberofapplicants} applicants</span>
       }
       </div>
 
       <div class="flex ">
     
-        {!appliedlist.includes(post.postid)?
-      <button 
-        type="button" 
-        onClick={handleApply}
-        class=" hover:bg-blue-700 font-sans bg-blue-500 rounded-md text-lg text-white font-bold py-2 px-6 w-48 xl:w-56 outline-none  shadow-lg transform active:scale-75 transition-transform"
-    >
-   Apply
      
-    </button>
-    :
     <button 
         type="button" 
-       
-        onClick={handleApply}
+        disabled
         class="flex gap-2 bg-blue-900 rounded-md text-lg text-white font-bold py-2 px-6 w-48 xl:w-56 outline-none  shadow-lg transform active:scale-75 transition-transform"
     >
   <span class="xl:mx-10 mx-6 font-sans">Applied</span>
@@ -272,7 +213,7 @@ function Recruiterposttemplate({post,appliedpost}) {
   <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"/>
 </svg>
     </button>
-      }
+      
       </div>
     </div>
     {!description?
@@ -317,11 +258,9 @@ function Recruiterposttemplate({post,appliedpost}) {
       }
       <br />
       Stipend : {post.stipend + " INR"}
-        <br />
+        <br />  
 
-        Last date to apply is {post.lastdatetoapply.substring(8,10) + "-"
-         + post.lastdatetoapply.substring(5,7) + "-" + 
-         post.lastdatetoapply.substring(0,4)}  .
+        {/* Last date to apply is {post.lastdatetoapply?post.lastdatetoapply.substring(8,10):""} */}
         <br />
         {post.info}
         </p>
@@ -334,4 +273,4 @@ function Recruiterposttemplate({post,appliedpost}) {
   )
 }
 
-export default Recruiterposttemplate
+export default Rpostindi

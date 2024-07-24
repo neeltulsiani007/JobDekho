@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState , useEffect } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
@@ -8,16 +8,16 @@ import axios from '../api/axios';
 import { toast , ToastContainer} from 'react-toastify';
 import baseUrl from '../baseUrl';
 
-function MiniatureApplicantsTemplate({applicants}) {
+function MiniatureShortlistTemplate({postid , applicants}) {
 
 const navigate = useNavigate();
 const[listexp,setListexp] = useState({});
 const[listedu , setListedu] = useState({});
 const [profile,setProfile] = useState({});
-const[skills,setSkills] = useState({});
-const[shortlisted , setShortlisted] = useState([])
 const[offer , setOffer] = useState([])
 const[modalopen , setModalOpen] = useState(false)
+const[skills,setSkills] = useState({});
+const[shortlisted , setShortlisted] = useState([])
 const[bio , setBio] = useState("New User")
 const axiosPrivate = useAxiosPrivate();
 
@@ -78,28 +78,27 @@ const getshortlisted = async()=>{
      }); 
 }
 const getoffered = async()=>{
-  await axios.post(`http://localhost:4000/getofferbyid`,{ postid:applicants.postid},
-    {
-     withCredentials:true
-    }).then((response) => {
-       console.log(response.data.recordset);
-       setOffer(response.data.recordset.map(function (obj) {
-        return obj.useremail;
-      }
-      ));
-     }); 
-}
+    await axios.post(`http://localhost:4000/getofferbyid`,{postid:postid},
+      {
+       withCredentials:true
+      }).then((response) => {
+         console.log(response.data.recordset);
+         setOffer(response.data.recordset.map(function (obj) {
+          return obj.useremail;
+        }
+        ));
+       }); 
+  }
 
+getoffered();
 getuserprofile();
 getuserskills();
 getusereducation();
 getuserexperience();
 getshortlisted();
-getoffered();
 
 },[applicants,axiosPrivate]);
 
-var i= 0;
 
 const getRandomColor = (i) => {
   const colors = 
@@ -122,46 +121,24 @@ const getRandomText = (i) => {
   return text[i];
 };
 
-const handleShortlist = async()=>
-{
-  if(!shortlisted.includes(applicants.useremail))
-    {
-      setShortlisted([...shortlisted , applicants.useremail])
-      toast.success("Candidate Shortlisted !")
-    }
-    else
-    {
-  let newshortlisted = shortlisted.filter((num) => num !== applicants.useremail);
-  setShortlisted([newshortlisted])
-  toast.success("Candidate removed from shortlist")
-    }
-
-  const res = await axiosPrivate.post(`${baseUrl}/handleshortlist`, {
-  postid:applicants.postid,
-  useremail : applicants.useremail,
-}, 
-{
-  withCredentials:true
-});
-}
 
 const handleOffer = async()=>
-  {
-    if(!offer.includes(applicants.useremail))
-      {
-        setOffer([...offer , applicants.useremail])
-        toast.success("Offer Sent !")
-        setModalOpen(false)
-      }
-
-    const res = await axiosPrivate.post(`${baseUrl}/handleoffer`, {
-    postid:applicants.postid,
-    useremail : applicants.useremail,
-  }, 
-  {
-    withCredentials:true
-  });
-  }
+    {
+      if(!offer.includes(applicants.useremail))
+        {
+          setOffer([...offer , applicants.useremail])
+          toast.success("Offer Sent !")
+          setModalOpen(false)
+        }
+  
+      const res = await axiosPrivate.post(`${baseUrl}/handleoffer`, {
+      postid:postid,
+      useremail : applicants.useremail,
+    }, 
+    {
+      withCredentials:true
+    });
+    }
 
 
   return(
@@ -171,9 +148,10 @@ const handleOffer = async()=>
          position='top-center'
          autoClose = '1500'
          />
-         {/* Modal Open */}
-         <div id="default-modal" tabindex="-1" aria-hidden="true" class={`${!modalopen && "hidden"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center flex w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
-    <div class="relative p-4 w-full max-w-2xl max-h-full"> 
+  <div class="relative">
+    {/* Modal Open */}
+    <div id="default-modal" tabindex="-1" aria-hidden="true" class={`${!modalopen && "hidden"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center flex w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
         <div class="relative bg-white rounded-lg shadow ">
             <div class="p-4 md:p-5 space-y-4">
               
@@ -181,7 +159,6 @@ const handleOffer = async()=>
                     Are you sure you want to send an offer
                 </p>
             </div>
-  
             <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b ">
                 <button
                 onClick={handleOffer}
@@ -194,7 +171,6 @@ const handleOffer = async()=>
     </div>
 </div>
 {/* Modal End */}
-  <div class="relative">
     <img class="w-full h-60 object-cover" src={profile.profilephoto?profile.profilephoto:logo} alt="Profile Image" />
   </div>
   <div class="px-6 py-4">
@@ -219,34 +195,22 @@ const handleOffer = async()=>
   <div class="px-4 pt-10 pb-6 flex w-full justify-between space-x-2">
     <button
         onClick={()=>{navigate(`/internprofile/${applicants.useremail}`)}}
-    class="text-blue-900 w-32 rounded-xl hover:border-none hover:text-white hover:bg-blue-900 border-blue-900 border-[1px] p-2">View Profile</button>
+    class="text-blue-900 w-52 rounded-xl hover:border-none hover:text-white hover:bg-blue-900 border-blue-900 border-[1px] p-2">View Profile</button>
     {!offer.includes(applicants.useremail)?
     <button 
     onClick={()=>{setModalOpen(true)}}
-    class="  text-blue-900 w-32 rounded-xl border-blue-900 border-[1px] p-2"
+    class="  text-blue-900 w-52 rounded-xl border-blue-900 border-[1px] p-2"
     >Send Offer</button>
     :
     <button 
-    class="w-32  rounded-xl  text-white bg-blue-900  p-2 "
+    class="w-52  rounded-xl  text-white bg-blue-900  p-2 "
     disabled
     >{profile.Bio === 'true'?"Hired":"Offer Sent"}</button>
-}
-
-
-    {shortlisted.includes(applicants.useremail)?
-    <button 
-    onClick={handleShortlist}
-    class="  w-32  rounded-xl  text-white bg-blue-900  p-2"
-    >Shortlisted</button>
-    :
-    <button 
-    class="text-blue-900 w-32 rounded-xl border-blue-900 border-[1px] p-2"
-    onClick={handleShortlist}
-    >Shortlist</button>
 }
   </div>
 </div>
   )
 }
 
-export default MiniatureApplicantsTemplate
+export default MiniatureShortlistTemplate
+

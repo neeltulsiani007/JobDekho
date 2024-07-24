@@ -35,7 +35,7 @@
             if(user.recordset[0]){
             const accessToken = jwt.sign({
                 "name" : user.recordset[0].name,
-                "number" : user.recordset[0].number
+                "email" : user.recordset[0].email
               },
               process.env.ACCESS_TOKEN_SECRET,
               {expiresIn : '30s'}
@@ -46,7 +46,7 @@
             {
               const accessToken = jwt.sign({
                 "name" : userrecruiter.recordset[0].name,
-                "number" : userrecruiter.recordset[0].number
+                "email" : userrecruiter.recordset[0].email
               },
               process.env.ACCESS_TOKEN_SECRET,
               {expiresIn : '30s'}

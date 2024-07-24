@@ -310,12 +310,14 @@ else{
     </div>
     <div class="md:w-1/2 px-3">
       <label class="flex uppercase tracking-wide text-grey-darker text-xs font-semibold mb-2" for="age">
-        Age
+        Date of Birth
       </label>
       <input 
+       onFocus={(e) => (e.target.type = "date")}
+       onBlur={(e) => (e.target.type = "text")}
       value={age}
         onChange={(e)=>{setAge(e.target.value)}}
-      class="appearance-none placeholder:text-xs block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="age" type="text" placeholder="Enter Age ..." />
+      class="appearance-none placeholder:text-xs block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="age"  placeholder="Enter Date ..." />
     </div>
   </div>
   <div class="-mx-3 md:flex mb-6">

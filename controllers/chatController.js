@@ -40,9 +40,9 @@ module.exports.getconversationbyid = async(req,res)=>{
     var sql = require("mssql");
     var request = new sql.Request()
     const { getuserbynumber } = require("./userController");
-    const usernumber = req.number;
+     const useremail = req.email;
   try{
-    request.input("number",sql.Numeric,usernumber);
+    request.input("email",sql.VarChar,email);
     const conversations =  await request.query("select * from chat where firstuser = @number or seconduser = @number order by orderdatetime desc");
     const conversationUserData = Promise.all(conversations.recordset.map(async (conversation) => {
         const receiverId = conversation.firstuser === usernumber?conversation.seconduser:conversation.firstuser;

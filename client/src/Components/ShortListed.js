@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import NavbarRecruiter from './NavbarRecruiter'
 import { useEffect } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import MiniatureApplicantsTemplate from './MiniatureApplicantsTemplate';
+import MiniatureShortlistTemplate from './MiniatureShortlistTemplate';
 import { useParams } from 'react-router-dom';
 
-function Applicants() {
+function ShortListed() {
 
     const axiosPrivate = useAxiosPrivate();
     const[applicants,setApplicants] = useState({});
@@ -14,11 +14,11 @@ function Applicants() {
     useEffect(() => {
 
        
-        document.getElementById("gethiredbutton").style.backgroundColor = ""
-        document.getElementById("gethiredbutton").style.color = "rgb(156 163 175)"
+        document.getElementById("gethiredbutton").style.backgroundColor = "rgb(17 24 39)"
+        document.getElementById("gethiredbutton").style.color = "white"
         document.getElementById("homebutton").style.backgroundColor = ""
-        document.getElementById("projectsbutton").style.color = "white"
-        document.getElementById("projectsbutton").style.backgroundColor = "rgb(17 24 39)"
+        document.getElementById("projectsbutton").style.color = "rgb(156 163 175)"
+        document.getElementById("projectsbutton").style.backgroundColor = ""
         document.getElementById("postbutton").style.color = "rgb(156 163 175)"
         document.getElementById("postbutton").style.backgroundColor = ""
         document.getElementById("homebutton").style.color = "rgb(156 163 175)"
@@ -27,7 +27,7 @@ function Applicants() {
 
         const getapplicantsdata = async() =>{
             try {
-                const response = await axiosPrivate.post('/getapplicantsbyid',
+                const response = await axiosPrivate.post('/getshortlistbyid',
                     {
                         postid:postid,
                     } ,
@@ -53,7 +53,7 @@ function Applicants() {
                     <ul>
                         {applicants.map((x, i) =>
                        <li className='py-8'>
-                        <MiniatureApplicantsTemplate applicants={x} />
+                        <MiniatureShortlistTemplate postid={postid} applicants={x} />
                        </li>
                         )}
                     </ul>
@@ -64,4 +64,4 @@ function Applicants() {
   )
 }
 
-export default Applicants
+export default ShortListed

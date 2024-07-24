@@ -7,8 +7,8 @@ import DatePicker from "react-datepicker";
 import { Country, State, City }  from 'country-state-city';
 import "react-datepicker/dist/react-datepicker.css";
 import { v4 as uuid } from 'uuid';
-import { Navigate } from 'react-router-dom';
-
+import { Navigate ,useNavigate } from 'react-router-dom';
+import logo from '../assets/rf.avif'
 
 function Recruiterpostform() {
   const [mode,setMode] = useState("Online")
@@ -30,6 +30,8 @@ function Recruiterpostform() {
   const [cities,setCities] = useState([])
   const [gotohome,setGotohome] = useState(false);
   const [info,setInfo] = useState("");
+  const[user , setUser] = useState({})
+  const navigate = useNavigate();
 
 const uid = uuid();
 
@@ -66,7 +68,18 @@ const uid = uuid();
           console.log(response)
         }catch(e){console.log(e)}
   }
+
+  const getuserprofile = async()=>{
+    await axiosPrivate.get("http://localhost:4000/getuserprofile",
+    {
+     withCredentials:true
+    }).then((response) => {
+       setUser(response.data.recordset[0]);    
+     }); 
+ }
+
       getUsers();
+      getuserprofile();
   },[axiosPrivate]);
 
   const handleCountry = (e)=>{
@@ -93,14 +106,9 @@ const uid = uuid();
     console.log(name,info,mode,stipend,skills,address,city,country,state,zipcode,lastdate)
     console.log(typeof(lastdate))
     const regex2 = /^[0-9\b]+$/;
-    if(!name)
-    {
-      toast.error('Enter Name', {
-       styles
-        });
-    }
+   
   
-    else if(!stipend)
+     if(!stipend)
     {
       toast.error('Enter Stipend', {
        styles
@@ -156,9 +164,12 @@ const uid = uuid();
     
     else{
    console.log("inside axios")
+   toast.success('Post Successful !', {
+    styles
+     });
     await axiosPrivate.post('http://localhost:4000/recruiterpost',{
       uid:uid,
-      name:name,
+      name:user.companyname,
       info:info,
       mode:mode,
       stipend:stipend,
@@ -172,10 +183,9 @@ const uid = uuid();
     },{
       withCredentials:true
     })
-    toast.success("Post Successful",{
-      styles
-    })
-    
+    setTimeout(() => {     
+      navigate("/recruiterhome")
+    }, 3000);
   }
   }
 
@@ -198,7 +208,7 @@ const uid = uuid();
 
    
   return (
-    <div class="min-h-screen bg-gray-100 font-sans">
+    <div class=" bg-gray-100 h-[calc(100dvh)] font-sans">
       <ToastContainer
       position="top-center"
       autoClose={1500}
@@ -219,30 +229,34 @@ const uid = uuid();
           class = {`container ${mode==="Offline" && "-my-9  "}  ${mode==="Online" && "-my-10"}  max-w-screen-lg mx-auto`}
         >
         <div>
-      <div class="bg-white rounded shadow-lg p-4 px-4 md:p-12 mb-12">
+      <div class="bg-white rounded shadow-lg mt-20 p-4 px-4 md:p-12">
         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
           <div class="text-black">
             <p class="font-bold text-2xl  font-serif ">Internship Details</p>
             <p class ="pt-2  text-gray-400">Please fill out all the fields.</p>
+            <img className="h-[calc(50dvh)] lg:block hidden " src={logo}></img>
           </div>
           <div class="lg:col-span-2">
             <div class="grid gap-4 gap-y-3 text-sm grid-cols-1 md:grid-cols-5">
               <div class="md:col-span-5">
-                <label class="text-slate-600 font-semibold"
+                <label class="text-slate-600 font-semibold flex"
                 for="full_name">Company Name / Startup Name</label>
-                <input autoFocus
-                 onChange={(e)=>{setName(e.target.value)}}
-                 type="text" name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={name} />
+                <input 
+                disabled
+                 value={user.companyname}
+                 placeholder={user.companyname}
+                 type="text" name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"  />
               </div>
 
              
 
               <div class="md:col-span-5">
-                <label class="text-slate-600 font-semibold"
+                <label class="text-slate-600 flex font-semibold"
                  for="email">Mode of Internship  </label>
                
                 <select
-                 class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                autoFocus
+                 class="h-10 border mt-1 flex rounded px-4 w-full bg-gray-50"
                  onChange={(e)=>{setMode(e.target.value)}}
                  value={mode}
                  id="modes" name="modes">
@@ -308,7 +322,7 @@ const uid = uuid();
 
              {mode==="Online"?
               <div class="md:col-span-1 hidden ">
-              <label for="zipcode">Zipcode </label>
+              <label className='flex' for="zipcode">Zipcode </label>
               <input type="text" name="zipcode" id="zipcode" class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
               </div>
               :
@@ -366,7 +380,7 @@ const uid = uuid();
             }
 
               <div class="md:col-span-5">
-                <label class="text-slate-600 font-semibold"
+                <label class="text-slate-600 flex font-semibold"
                  for="email">Skills Required</label>
                 <textarea 
                 value={skills}
@@ -377,7 +391,7 @@ const uid = uuid();
               </div>
               
               <div class="md:col-span-3">
-                <label class="text-slate-600 font-semibold"
+                <label class="text-slate-600 flex font-semibold"
                  for="stipend">Stipend</label>
                 <input
                 value={stipend}
@@ -387,7 +401,7 @@ const uid = uuid();
               </div>
 
               <div class="react-datepicker-wrapper md:col-span-2">
-                <label class="text-slate-600 font-semibold"
+                <label class="text-slate-600  font-semibold"
                 for="date"> Last date to apply </label>
                
                 <DatePicker
@@ -406,16 +420,16 @@ const uid = uuid();
                  placeholder="" /> */}
               </div>
 
-              <div class="md:col-span-5">
-                <label class="text-slate-600 font-semibold"
-                 for="email">Extra Information (optional)</label>
-                <textarea 
+              <div class="md:col-span-5 mt-3">
+                <label class="text-slate-600 flex font-semibold"
+                 for="email">Role</label>
+                <input 
+                required
                 value={info}
-                style={{resize:"none"}}
                 onChange={(e)=>{setInfo(e.target.value)}}
-               class="h-20 border py-2 rounded px-4  w-full bg-gray-50" 
-                placeholder="Enter extra information ...">
-                </textarea>
+               class=" border h-10 mt-2  rounded px-4  w-full bg-gray-50" 
+                placeholder="Enter internship role ..." />
+           
               </div>
       
               <div class="md:col-span-5 text-right">

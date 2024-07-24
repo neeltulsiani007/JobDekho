@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react'
 import { toast , ToastContainer} from 'react-toastify';
 import {ref, uploadBytes , getDownloadURL, getStorage} from "firebase/storage";
-import firebase from 'firebase/compat/app';
 import { getApp } from "firebase/app";
 import {v4} from "uuid"
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -23,33 +22,34 @@ function Postform() {
     const[imageupload,setImageupload] = useState(null);
     const[submittext , setSubmittext] = useState("Post");
    const axiosPrivate = useAxiosPrivate();
+
    var firebaseConfig = {
-    apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
-    authDomain: "otp-function-f1bf6.firebaseapp.com",
-    projectId: "otp-function-f1bf6",
-    storageBucket: "otp-function-f1bf6.appspot.com",
-    messagingSenderId: "158018589085",
-    appId: "1:158018589085:web:9e919de6ca149332215f74"
-  };
+  apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
+  authDomain: "otp-function-f1bf6.firebaseapp.com",
+  databaseURL: "https://otp-function-f1bf6-default-rtdb.firebaseio.com",
+  projectId: "otp-function-f1bf6",
+  storageBucket: "otp-function-f1bf6.appspot.com",
+  messagingSenderId: "158018589085",
+  appId: "1:158018589085:web:87b6692eadbf138d215f74"
+};
 
-  useEffect(() => {
-    if (!firebase.apps.length) {
-      console.log("in profile firebase1")
-     firebase.initializeApp({firebaseConfig});
-    }
-     else{
-      console.log(firebase.apps.length)
-        firebase.app(); 
-        console.log("in profile firebase2")   
-     }
+  // useEffect(() => {
+  //   if (!firebase.apps.length) {
+  //     console.log("in profile firebase1")
+  //    firebase.initializeApp({firebaseConfig});
+  //   }
+  //    else{
+  //     console.log(firebase.apps.length)
+  //       firebase.app(); 
+  //       console.log("in profile firebase2")   
+  //    }
 
-  },[]);
+  // },[]);
 
 
-  if(firebase.apps.length == 1){
-   const firebaseApp = getApp();
-   var storage = getStorage(firebaseApp, "gs://otp-function-f1bf6.appspot.com");
-  }
+
+   var storage = getStorage(getApp(), "gs://otp-function-f1bf6.appspot.com");
+
 
   const navigate = useNavigate();
   useEffect(() => {

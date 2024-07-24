@@ -185,14 +185,14 @@ module.exports.getuser = async (req,res)=>{
   var sql = require("mssql");
   var request = new sql.Request();
  
-  const number = req.number;
-  request.input('number', sql.Numeric, number);
-  const user = await request.query("Select * from Intern  where number = @number")
-  const userrecruiter = await request.query("Select * from Recruiter  where number = @number")
+  const email = req.email;
+  request.input('email', sql.VarChar, email);
+  const user = await request.query("Select * from Intern  where email = @email")
+  const userrecruiter = await request.query("Select * from Recruiter  where email = @email")
 
   try{
       if(user.recordset[0]){
-       await request.query("select * from Intern where number = @number",function(err,recordset){
+       await request.query("select * from Intern where email = @email",function(err,recordset){
       if(err)
       {
         console.log(err);
@@ -202,7 +202,7 @@ module.exports.getuser = async (req,res)=>{
     }
     else
     {
-      await request.query("select * from Recruiter where number = @number",function(err,recordset){
+      await request.query("select * from Recruiter where email = @email",function(err,recordset){
         if(err)
         {
           console.log(err);
@@ -221,12 +221,12 @@ module.exports.getusertype = async (req,res)=>{
   var sql = require("mssql");
   var request = new sql.Request();
  
-  const number = req.number;
+  const email = req.email;
 
-  request.input('number', sql.Numeric, number);
+  request.input('email', sql.VarChar, email);
   try{
-     const user =   await request.query("select * from Intern where number = @number",);
-     const userrecruiter =   await request.query("select * from Recruiter where number = @number",);
+     const user =   await request.query("select * from Intern where email = @email",);
+     const userrecruiter =   await request.query("select * from Recruiter where email = @email",);
     
      if(user.recordset[0])
      {

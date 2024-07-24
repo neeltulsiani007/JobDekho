@@ -24,26 +24,10 @@ function Videoform(){
     const [videoupload,setVideoupload] = useState(false)
     const navigate = useNavigate();
 
-    var firebaseConfig = {
-      apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
-      authDomain: "otp-function-f1bf6.firebaseapp.com",
-      projectId: "otp-function-f1bf6",
-      storageBucket: "otp-function-f1bf6.appspot.com",
-      messagingSenderId: "158018589085",
-      appId: "1:158018589085:web:9e919de6ca149332215f74"
-    };
+    
 
-    if (!firebase.apps.length) {
-      console.log("in profile firebase1")
-     firebase.initializeApp({firebaseConfig});
-    }
-     else{
-      console.log(firebase.apps.length)
-        firebase.app(); 
-        console.log("in profile firebase2")   
-     }
-     const firebaseApp = getApp();
-     const storage = getStorage(firebaseApp, "gs://otp-function-f1bf6.appspot.com");
+    
+     const storage = getStorage(getApp(), "gs://otp-function-f1bf6.appspot.com");
   
 
     useEffect(() => {

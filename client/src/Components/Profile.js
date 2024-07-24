@@ -11,6 +11,7 @@ import { TextField } from '@mui/material'
 import { indigo } from '@mui/material/colors';
 import { Fragment } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import logo from './def.png'
 
 
 function Profile(){
@@ -36,26 +37,11 @@ function Profile(){
   
   const here = useRef();
 
-  var firebaseConfig = {
-      apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
-      authDomain: "otp-function-f1bf6.firebaseapp.com",
-      projectId: "otp-function-f1bf6",
-      storageBucket: "otp-function-f1bf6.appspot.com",
-      messagingSenderId: "158018589085",
-      appId: "1:158018589085:web:9e919de6ca149332215f74"
-    };
+  
 
-  if (!firebase.apps.length) {
-    console.log("in profile firebase1")
-   firebase.initializeApp({firebaseConfig});
-  }
-   else{
-    console.log(firebase.apps.length)
-      firebase.app(); 
-      console.log("in profile firebase2")   
-   }
-   const firebaseApp = getApp();
-   const storage = getStorage(firebaseApp, "gs://otp-function-f1bf6.appspot.com");
+ 
+   
+   const storage = getStorage( getApp(), "gs://otp-function-f1bf6.appspot.com");
 
   useEffect(() => {
 
@@ -208,12 +194,11 @@ function Profile(){
          </h2>
         <form className='py-1' id="formprofile" >
             <div className='flex justify-center py-4'>
-                <label htmlFor="profilephoto">  
-                 
+                <label htmlFor="profilephoto">         
                 {!loading?
                     <div class="h-36 w-36     rounded-full mx-auto items-center justify-center pt-4 ">
                     <Fragment>
-                                <div class="text-2xl text-center ">Loading ...</div>
+                    <div class="text-2xl text-center ">Loading ...</div>
                <ThreeDots
                 height="80" 
                 width="80" 
@@ -233,11 +218,11 @@ function Profile(){
                   <LazyLoadImage 
                 src={imageupload}    
                 effect='blur'
-                className="h-36 w-36 cursor-pointer border-2 border-gray-100 hover:border-gray-600  rounded-full shadow-lg" alt="loading ..." /> 
+                className="h-36 w-36 cursor-pointer border-2 border-gray-200 hover:border-gray-600  rounded-full shadow-lg" alt="loading ..." /> 
                 :
                 <LazyLoadImage 
                 effect='blur'
-                 src={`http://localhost:4000/uploads/${user?.profilephoto?user?.profilephoto:"defaultuser.png"}`} 
+                 src={user.profilephoto?user.profilephoto:logo}
                  className="h-36 w-36 cursor-pointer border-2 border-gray-100 hover:border-gray-600  rounded-full shadow-lg" alt="loading ..." /> 
                }
                </div>
@@ -253,22 +238,19 @@ function Profile(){
                  src={`http://localhost:4000/uploads/${display}`} 
                  effect='blur'
                 className="h-36 w-36  cursor-pointer border-2 border-gray-100 hover:border-gray-600  rounded-full shadow-lg" alt="loading ..." /> 
-               }
-                </label> 
+               } */}
+              
                 <input  id="profilephoto" 
-                disabled={update}
-                type={"file"} style={{display:'none'}} onChange={handlechange} /> */}
-                 <input  id="profilephoto" 
                 disabled={update}
                 type={"file"} style={{display:'none'}} onChange={handlechange} />
             </div>
 
-            <div className="textbox flex flex-col items-center gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 p-2 gap-4">
 
-              <div className="name flex w-full gap-10">
+              <div className="w-full flex gap-10  name">
                 {update?
                 <input 
-                className="bg-white placeholder-black  border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text"
+                className="bg-white placeholder-black  border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text"
                disabled = {update}
                 placeholder={"Name : "+ user.name} />              
                 :
@@ -285,15 +267,17 @@ function Profile(){
                 disabled = {update}
                 type="text"  label="Name"  />
                 }
+                </div>
 
+                <div className='w-full flex gap-10  name'>
                 {update?
                 <input 
-                className="bg-white placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text"
+                className="bg-white placeholder-black border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text"
                disabled = {update}
                placeholder={"E-mail : "+ user.email}/>
                 :
                 <input 
-                className="bg-white placeholder-gray-600 border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text"
+                className="bg-white placeholder-gray-600 border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text"
                disabled = {!update}
                onChange={(e)=>{setEmail(e.target.value)}}
                placeholder={"E-mail : "+ user.email} />
@@ -303,19 +287,21 @@ function Profile(){
               <div className="name flex w-full gap-10">
                 { update?
                 <input   
-                className="bg-white placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text"
+                className="bg-white placeholder-black border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text"
                  disabled = {update}
                  placeholder={"Contact No. : "+ user.number} />
                  :
                  <input   
-                className="bg-white placeholder-gray-600 border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text"
+                className="bg-white placeholder-gray-600 border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text"
                  disabled = {!update}
        
                 placeholder={"Contact No. : "+ user.number} />
                 }
+                </div>
+                <div className='w-full flex gap-10  name'>
                {update?
               <input
-                className="bg-white  placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text" 
+                className="bg-white  placeholder-black border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text" 
                  disabled = {update}
                  placeholder={companyplaceholder}  />
                 :
@@ -338,31 +324,33 @@ function Profile(){
               {
                 update?
               <input 
-                className="bg-white placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text" 
+                className="bg-white placeholder-black border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" type="text" 
                disabled = {update}
-               placeholder={"Member Since : "+user.dateofjoin} />
+               placeholder={"Verified : "+user.verified} />
                 :
                 <input 
-                className="bg-white placeholder-gray-600 border-0 px-5 py-3 w-3/4 shadow-sm text-lg focus:outline-none" type="text" 
+                className="bg-white placeholder-gray-600 border-0 px-5 py-3 w-full shadow-sm text-lg focus:outline-none" type="text" 
                disabled = {!update}
                onChange={(e)=>{setDateofjoin(e.target.value)}}
-                placeholder={"Member Since : "+user.dateofjoin} />
+                placeholder={"Verified : "+user.verified} />
                }
-
+               </div>
+               <div className='w-full flex gap-10  name'>
                 {update?
                 <input 
-                className="bg-white placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" 
+                className="bg-white placeholder-black border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" 
                 type="text" 
                 disabled = {update}
-                placeholder={"Applicants : "+user.numberofapplicants} />
+                placeholder={"Applicants : "+user.applicants} />
                 :
                 <input 
-                className="bg-white placeholder-gray-600 border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" 
+                className="bg-white placeholder-gray-600 border-0 px-5 py-3  w-full shadow-sm text-lg focus:outline-none" 
                 type="text" 
                 disabled = {!update}
-                placeholder={"Applicants : "+user.numberofapplicants} />
+                placeholder={"Applicants : "+user.applicants} />
                 }
               </div> 
+              <div className='sm:col-span-2'>
               {update?
               <textarea  
               className="bg-white  placeholder-black border-0 px-5 w-3/4 shadow-sm pb-16 text-lg focus:outline-none h-28"
@@ -390,6 +378,7 @@ function Profile(){
               disabled = {update}
               type="text"  label="Bio" />
               }
+              </div>
 
               <div className="name flex w-full gap-10 ">
               <button
@@ -398,6 +387,8 @@ function Profile(){
                    focus:ring-4 focus:outline-none focus:ring-blue-300 
                    font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                     type='button'>Edit</button>  
+                    </div>
+                    <div>
                   <button
                    onClick={handleUpdate}
                   disabled={update}
@@ -407,6 +398,17 @@ function Profile(){
                    type='submit'>Update</button>     
            </div>
           </div>
+     
+  {/* <div class="p-4">Item 1</div>
+  <div class="p-4">Item 2</div>
+  <div class="p-4">Item 3</div>
+  <div class="p-4">Item 4</div>
+  <div class="p-4">Item 5</div>
+  <div class="p-4">Item 6</div>
+  <div class="p-4 sm:col-span-2">Item 7</div>
+  <div class="p-4">Item 8</div>
+  <div class="p-4">Item 9</div> */}
+
         </form>
       </div>
     </div>

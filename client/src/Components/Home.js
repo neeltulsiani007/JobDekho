@@ -109,7 +109,6 @@ function Home()  {
                 console.log("here",(response.data.recordset));
             // isMounted && 
             setPost(response.data.recordset.reverse())  
-        
         })
         } catch (err) {
             console.error(err);

@@ -17,18 +17,7 @@ function Recruitmentform()  {
   const[gotoOtppage,setGotoOtppage] = useState(false);
   var app;
 
-  useEffect(() => {
-    if(!firebase.apps.length){
-      console.log("here")
-      app = firebase.initializeApp(firebaseConfig);
-      }
-      else
-      {
-       app =  firebase.app();
-       console.log(firebase.apps.length)
-        console.log("not here")
-      }
-   },[firebaseConfig]);
+  
 
    var firebaseConfig = {
     apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",

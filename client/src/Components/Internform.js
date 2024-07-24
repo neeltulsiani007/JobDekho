@@ -36,31 +36,7 @@ function Internform(){
   theme: "colored"
 }
 
- useEffect(() => {
-
-  var firebaseConfig = {
-    apiKey: "AIzaSyB0jHNMjt5JhaiDMNY5zyVLemZ85IpsdxU",
-    authDomain: "otp-function-f1bf6.firebaseapp.com",
-    projectId: "otp-function-f1bf6",
-    storageBucket: "otp-function-f1bf6.appspot.com",
-    messagingSenderId: "158018589085",
-    appId: "1:158018589085:web:9e919de6ca149332215f74"
-  };
-
-  if(!firebase.apps.length){
-    console.log("here")
-    firebase.initializeApp(firebaseConfig);
-    }
-    else
-    { 
-      firebase.app().delete().then(function() {
-        firebase.initializeApp(firebaseConfig);
-      });
-     console.log(firebase.apps.length)
-      console.log("not here")
-    }
-    
- },[]);
+  
 
 
 

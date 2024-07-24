@@ -6,6 +6,7 @@ import { indigo } from '@mui/material/colors';
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
+import logo from './def.png'
 
 
 function RecruiterProfiletemplate(){
@@ -73,7 +74,7 @@ function RecruiterProfiletemplate(){
               
                 <LazyLoadImage 
                 effect='blur'
-                 src={`http://localhost:4000/uploads/${user?.profilephoto?user?.profilephoto:"defaultuser.png"}`} 
+                src={user.profilephoto?user.profilephoto:logo} 
                  className="h-36 w-36 cursor-pointer border-2 border-gray-100 hover:border-gray-600  rounded-full shadow-lg" alt="loading ..." /> 
 
                </div>
@@ -96,9 +97,9 @@ function RecruiterProfiletemplate(){
                 type={"file"} style={{display:'none'}} onChange={handlechange} /> */}
             </div>
 
-            <div className="textbox flex flex-col items-center gap-6">
+            <div className="textbox flex flex-col font-semibold items-center gap-6">
 
-              <div className="name flex w-full gap-10">
+              <div className="name flex w-full gap-10 ">
           
                 <input 
                 className="bg-white placeholder-black  border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text"
@@ -125,7 +126,7 @@ function RecruiterProfiletemplate(){
               <input
                 className="bg-white  placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text" 
                  disabled = {update}
-                 placeholder={companyplaceholder}  />
+                 placeholder={"Company Name : "+ user.companyname}  />
               </div>
 
               <div className="name flex w-full gap-10">
@@ -133,7 +134,7 @@ function RecruiterProfiletemplate(){
               <input 
                 className="bg-white placeholder-black border-0 px-5 py-3  w-3/4 shadow-sm text-lg focus:outline-none" type="text" 
                disabled = {update}
-               placeholder={"Member Since : "+user?.doj?.substring(0,10)} />
+               placeholder={"Verified : "+user.verified}/>
                
 
                 <input 
@@ -145,11 +146,11 @@ function RecruiterProfiletemplate(){
               </div> 
             
               <textarea  
-              className="bg-white  placeholder-black border-0 px-5 w-3/4 shadow-sm pb-16 text-lg focus:outline-none h-28"
+              className="bg-white  placeholder-black border-0 px-5 pt-4 w-3/4 shadow-sm pb-16 text-lg focus:outline-none h-28"
               type="text"
               style={{resize:"none"}}
               disabled = {update}
-              placeholder={bioplaceholder} />
+              placeholder={"Bio : "+user.bio} />
   
               <div className="name flex w-full gap-10 ">
               {/* <button

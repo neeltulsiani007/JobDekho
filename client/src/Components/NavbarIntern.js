@@ -225,7 +225,7 @@ const handlePostClick = ()=>{
                       :
                       <img
                       className="h-10 w-10 rounded-full"
-                      src={Logo}    
+                      src={user.profilephoto?user.profilephoto:Logo}    
                       alt=""
                     />
                       }

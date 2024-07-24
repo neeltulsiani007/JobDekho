@@ -21,7 +21,7 @@ jwt.verify(
         return res.sendStatus(403);
        }
         req.user = decoded.name;
-        req.number = decoded.number;
+        req.email = decoded.email;
         next();
        
     }

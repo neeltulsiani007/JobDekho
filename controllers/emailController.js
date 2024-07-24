@@ -1,47 +1,16 @@
 module.exports.sendemail = async (req,res)=>{
     var sql = require("mssql");
     var request = new sql.Request();
-    const sendEmail = require("../sendEmail");
-    
-    const accesstoken = req.headers.accesstoken;
-    console.log(accesstoken)
-   console.log(req.body)
-   const number = req.number;
-   request.input('number', sql.Numeric, number);
-   const user = await request.query("Select * from Intern  where number = @number")
-   const userrecruiter = await request.query("Select * from Recruiter  where number = @number")
-   var email;
-   var refreshtoken
-   if(user.recordset[0])
-   {
-     email = user.recordset[0].email
-    console.log(email)
-    refreshtoken = user.recordset[0].refreshtoken
-    request.input('email',sql.VarChar,email);
-   }
-   else
-   {
-    email = userrecruiter.recordset[0].email
-    refreshtoken = userrecruiter.recordset[0].refreshtoken
-    console.log(email)
-   }
+    console.log("in sendemail")
+   const email = req.email;
+   console.log(req.email)
+   request.input('email', sql.VarChar, email);
+   request.input('verified', sql.VarChar, "true");
 
-   const text = "Thank you for signing up with Job Dekho ! Please click on the following link to verify your email address!"
-   const url = `${process.env.BASE_URL}emailverification/${req.number}/verify/${refreshtoken}`;
    try{
-		const e = await sendEmail(email, "Verify Email", url);
-        if(e)
-        {
-		res
-		.status(201)
-		.send({ message: "An Email sent to your account please verify" ,success:true});
-        }
-        else
-        {
-         res
-		.status(201)
-		.send({ message: "Invalid Email" , success:false });
-        }
+		const e =  await request.query("update Intern set verified = @verified where email = @email" );
+        const e2 =  await request.query("update Recruiter set verified = @verified where email = @email " );
+        return res.status(200).json({success: true})
 
    }catch(e)
    {

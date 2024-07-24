@@ -1,19 +1,32 @@
 import React, { useState } from 'react'
-import Hire from './Hire'
+import NavbarRecruiter from './NavbarRecruiter'
 import { useEffect } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import MiniatureApplicantsTemplate from './MiniatureApplicantsTemplate';
 import { AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import logo from './def.png'
 
-function HirewithApplicants() {
+function ApplicantsHome() {
 
     const axiosPrivate = useAxiosPrivate();
     const[posts,setPosts] = useState({});
     const[user , setUser] = useState({});
-    const navigate = useNavigate()
-   
+    const navigate = useNavigate();
+
     useEffect(() => {
+
+       
+        document.getElementById("gethiredbutton").style.backgroundColor = ""
+        document.getElementById("gethiredbutton").style.color = "rgb(156 163 175)"
+        document.getElementById("homebutton").style.backgroundColor = ""
+        document.getElementById("projectsbutton").style.color = "white"
+        document.getElementById("projectsbutton").style.backgroundColor = "rgb(17 24 39)"
+        document.getElementById("postbutton").style.color = "rgb(156 163 175)"
+        document.getElementById("postbutton").style.backgroundColor = ""
+        document.getElementById("homebutton").style.color = "rgb(156 163 175)"
+
+
 
         const getoffersdata = async() =>{
             try {
@@ -40,8 +53,8 @@ function HirewithApplicants() {
       },[axiosPrivate]);
 
   return (
-    <div className=' '>
-      <Hire />
+    <div class="min-h-screen bg-gray-200 items-center justify-center">
+      <NavbarRecruiter />
       <div className=' mt-12 h-[calc(91dvh)] '>
       {posts?.length
                 ?(
@@ -65,10 +78,10 @@ function HirewithApplicants() {
         <div class="flex w-full items-center justify-center  mt-4 md:mt-6 space-x-4">
         <button 
         disabled
-        class="w-52 py-2 px-4 ms-2 md:w-56 items-center text-sm font-medium text-white focus:outline-none bg-gray-700 rounded-lg border border-gray-700 hover:bg-gray-800  focus:z-10 focus:ring-4 focus:ring-gray-100 ">{x.numberofshortlisted==1?"1 Shortlisted":x.numberofshortlisted+" Shortlisted"}</button>
+        class="w-36 py-2 px-4 ms-2 md:w-48 items-center text-sm font-medium text-white focus:outline-none bg-gray-700 rounded-lg border border-gray-700 hover:bg-gray-800  focus:z-10 focus:ring-4 focus:ring-gray-100 ">{x.numberofapplicants==1?"1 Applicant":x.numberofapplicants+" Applicants"}</button>
         <button 
-        onClick={()=>{navigate(`/shortlisted/${x.postid}`)}}
-        class="w-52 md:w-56 items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">See Shortlisted Applicants</button>   
+        onClick={()=>{navigate(`/applicants/${x.postid}`)}}
+        class="w-36 md:w-48 items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">See Applicants</button>   
         </div>
     </div>
 </div>
@@ -82,4 +95,4 @@ function HirewithApplicants() {
   )
 }
 
-export default HirewithApplicants
+export default ApplicantsHome

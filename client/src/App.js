@@ -9,6 +9,7 @@ import ChatProvider from './context/ChatProvider';
 import Loginpage from './Components/Loginpage';
 import Title  from './Components/Title';
 import Internform  from './Components/Internform';
+import ApplicantsHome from './Components/ApplicantsHome';
 import Recruitment from './Components/Recruitment';
 import Otpinput from './Components/Otpinput';
 import Recruitmentform from './Components/Recruitmentform';
@@ -41,13 +42,18 @@ import Videoform from './Components/Videoform'
 import Post from './Components/Post';
 import FilterSidebar from './Components/FilterSidebar';
 import MiniatureProfileTemplate from './Components/MiniatureProfileTemplate';
+import Otp from './Components/Otp';
 // import Chatting from './Components/Chatting';
 // import SearchBar from './Components/SearchBar';
 import RecruiterProfiletemplate from './Components/RecruiterProfiletemplate';
 import Internformotpstep from './Components/Internformotpstep';
 import Internformmultistep from './Components/Internformmultistep';
+import InternProfileNavbar from './Components/InternProfileNavbar';
+import InternProfile from './Components/Internprofile';
 import Internformlast from './Components/Internformlast';
 import Recruiterformmultistep3 from './Components/Recruiterformmultistep3';
+import ShortListed from './Components/ShortListed';
+import Rpostindi from './Components/Rpostindi';
 
 
 const Home = lazy(() => import('./Components/Home'));
@@ -87,13 +93,14 @@ function App() {
         <Route exact path='post/:id' element={<Individualpost />} />
         <Route exact path='internprofile/:number' element={<Internprofile />} />
         <Route exact path='comments/:id' element={<Postcomments />} />
+        <Route exact path='rpost/:postid' element={<Rpostindi />} />
         <Route exact path='users' element={<Userdata />} />
         <Route exact path='hire' element={<Hire />} />
         <Route exact path='recruiterpostform' element={<Recruiterpostform />} />
         <Route exact path='recruiterhome' element={<Recruiterhome />} />
         <Route exact path='changepasswordsetting' element={<Changepasswordsetting />}/>
         <Route exact path='profilesetting' element={<Profilesetting />}/>
-        <Route exact path='applicants' element={<Applicants />}/>
+        <Route exact path='applicants' element={<ApplicantsHome />}/>
         <Route exact path='logout' element={<Logout />} />
         <Route exact path ='gethiredwithpost'element = {<Gethiredwithpost />} />
         <Route exact path='emailverification' element={<Emailverificationsetting />} />
@@ -102,11 +109,15 @@ function App() {
         <Route exact path='recruiterchangepasswordsetting' element={<RecruiterChangePasswordsetting />} />
         <Route exact path = 'recruiterposttemplate' element={<Recruiterposttemplate />} />
         <Route exact path="/emailverification/:number/verify/:token" element={<EmailVerify />} />
+        <Route exact path="/applicants/:postid" element={<Applicants />} />
+        <Route exact path="/shortlisted/:postid" element={<ShortListed />} />
         <Route exact path='recruiteremailverifysetting' element={<RecruiterEmailVerifysetting />} />
         <Route exact path ='hirewithapplicants'element = {<HirewithApplicants />} />
+        <Route exact path ='internprofile'element = {<InternProfile />} />
         {/* <Route exact path ='displayvideo'element = {<DisplayVideo />} />
         <Route exact path ='postvideo'element = {<PostVideo />} /> */}
         <Route exact path ='videoform'element = {<Videoform />} />
+        <Route exact path ='otp'element = {<Otp />} />
         {/* <Route exact path ='sample'element = {<Samplevideo />} /> */}
         <Route exact path ='filtersidebar'element = {<FilterSidebar />} />
         <Route exact path ='post'element = {<Post />} />
@@ -114,6 +125,7 @@ function App() {
         <Route exact path ='chatting'element = {<Chatting />} /> */}
         <Route exact path ='miniatureprofiletemplate'element = {<MiniatureProfileTemplate />} />
         <Route exact path ='recruiterprofile/:number'element = {<RecruiterProfiletemplate />} />
+        <Route exact path ='internprofilenavbar'element = {<InternProfileNavbar />} />
       </Routes>
       </Suspense>
       </MuteContext.Provider>

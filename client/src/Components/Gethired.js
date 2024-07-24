@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon ,PowerIcon ,UserCircleIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, BellIcon, XMarkIcon ,PowerIcon ,UserCircleIcon ,CameraIcon , VideoCameraIcon} from '@heroicons/react/24/outline'
 import Logo from './jobdekho.ico.png'
 import { Link } from 'react-router-dom'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
 import baseUrl from "../baseUrl";
+import homebaseUrl from '../homebaseUrl'
 
 
 function Gethired(){
@@ -30,18 +31,7 @@ function Gethired(){
         document.getElementById("postbutton").style.backgroundColor = ""
         document.getElementById("homebutton").style.color = "rgb(156 163 175)"
 
-      // const getuserprofile = async()=>{
-      //     await axiosPrivate.get("http://localhost:4000/getuserprofile",
-      //     {
-      //      withCredentials:true
-      //     }).then((response) => {
-      //      console.log("user")
-      //        console.log(response.data.recordset[0]);
-      //        setUser(response.data.recordset[0]);
-      //      }); 
-      //  }
-      //  getuserprofile();
-
+    
       },[axiosPrivate]);
 
       const StyledAutocomplete = styled(Autocomplete)({
@@ -78,10 +68,10 @@ function Gethired(){
       });
 
       const navigation = [
-        { name: 'Home', href: `${baseUrl}/home`, current:true ,id:"homebutton" },
-        { name: 'Get Hired', href: `${baseUrl}/gethiredwithpost`, current:false ,id:"gethiredbutton"},
-        { name: 'Offers', href: `${baseUrl}/users`, current:false ,id:"projectsbutton"},
-        { name: 'Post', href: `${baseUrl}/postform`, current:false ,id:"postbutton"},
+        { name: 'Home', href: `${homebaseUrl}/home`, current:true ,id:"homebutton" },
+        { name: 'Get Hired', href: `${homebaseUrl}/gethiredwithpost`, current:false ,id:"gethiredbutton"},
+        { name: 'Offers', href: `${homebaseUrl}/users`, current:false ,id:"projectsbutton"},
+  
       ]
 
      
@@ -178,6 +168,59 @@ function Gethired(){
                       {item.name}
                     </Link>
                   ))}
+                   <Menu as="div" className="relative ">
+                  <div>
+                
+                    <Menu.Button 
+                    // aria-current={false ? 'page' : undefined}
+                    id="postbutton"  className= 'font-sans hover:bg-gray-700 hover:text-white focus:bg-gray-800 flex gap-1 rounded-md  px-3 py-2 text-sm font-medium text-gray-400'>
+                      <span className="sr-only">Open user menu</span>
+                     Post
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute right-0 z-10 mt-2  w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          to="/postform"
+                          className= 'flex gap-1 hover:bg-gray-100  px-4 py-2 text-sm font-semibold text-gray-700'
+                
+                        >  
+                        <CameraIcon 
+                        class="h-5 w-5"
+                        />
+                          <span class="flex gap-5 font-sans  mx-1">  Photo </span>
+                        </Link>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+      
+                      {({ active }) => (
+                     <Link
+                     to="/videoform"
+                     className= 'flex gap-1 hover:bg-gray-100  px-4 py-2 text-sm font-semibold text-gray-700'
+           
+                   >  
+                   <VideoCameraIcon
+                   class="h-5 w-5"
+                   />
+                     <span class="flex gap-5 font-sans  mx-1"> Video </span>
+                   </Link>
+                      )}
+                    </Menu.Item>
+                  
+                  </Menu.Items>
+                </Transition>
+                </Menu>
                 </div>
               </div>
               <div class="my-auto mx-auto"  id="search" >

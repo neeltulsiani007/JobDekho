@@ -1,18 +1,26 @@
 
 
 const sql = require('mssql');
-// const config ={
-//     user: 'SA',
-//     password: 'Password123',
-//     database: 'TutorialDB',
-//     server: 'localhost',
+const config ={
+    user: 'SA',
+    password: 'Password123',
+    database: 'TutorialDB',
+    server: 'localhost',
     
-//     options:{
-//         trustServerCertificate: true,
-//         trustedConnection: false,
-//         enableArithAbort: true,
-//     },
-// }
+    options:{
+        trustServerCertificate: true,
+        trustedConnection: false,
+        enableArithAbort: true,
+    },
+}
+const connect = ()=>{
+    sql.connect(config,  function (err) {
+        
+        if (err) {console.log(err)};
+        console.log('DB connected');
+    })
+    }
+    module.exports = connect;
 // const config ={
 //     user: 'sql12645651',
 //     port :3306,
@@ -52,13 +60,13 @@ const sql = require('mssql');
 // })
 // }
 
-const connect = ()=>{
-    sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:server-full-stack-jd.database.windows.net,1433;Database=jd-databse;Uid=neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
+// const connect = ()=>{
+//     sql.connect("Driver={ODBC Driver 18 for SQL Server};Server=tcp:server-full-stack-jd.database.windows.net,1433;Database=jd-databse;Uid=neel;Pwd={Password1!};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;",  function (err) {
         
-        if (err) {console.log(err)};
-        console.log('DB Connected');
-    })
-    }
+//         if (err) {console.log(err)};
+//         console.log('DB Connected');
+//     })
+//     }
 
 
 module.exports = connect;

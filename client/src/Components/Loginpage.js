@@ -159,14 +159,12 @@ function Loginpage(){
             </svg>
           </div>
 
-          <div class="text-right mt-3">
-            <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
-          </div>
+          
 
           <button 
                   onClick={onSignInSubmit}
           type="submit" class="w-full flex items-center justify-center  bg-blue-800 hover:bg-[#002D74] focus:bg-blue-600 text-white font-semibold rounded-lg
-                px-4 py-3 mt-6">{`${loading?"Loading":"Login"}`}
+                px-4 py-3 mt-12">{`${loading?"Loading":"Login"}`}
           
                         <svg aria-hidden="true" 
                         class = {`w-6 h-6 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-white ${!loading&&"hidden"}`}

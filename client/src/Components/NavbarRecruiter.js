@@ -19,7 +19,7 @@ const navigate = useNavigate();
 
 const navigation = [
   { name: 'Home', href: 'http://localhost:3000/recruiterhome', current:true ,id:"homebutton" },
-  { name: 'Hire', href: 'http://localhost:3000/hirewithapplicants', current:false ,id:"gethiredbutton"},
+  { name: 'Shortlisted', href: 'http://localhost:3000/hirewithapplicants', current:false ,id:"gethiredbutton"},
  { name: 'Applicants', href: 'http://localhost:3000/applicants', current:false ,id:"projectsbutton"},
   { name: 'Post', href: 'http://localhost:3000/recruiterpostform', current:false ,id:"postbutton"},
 ]

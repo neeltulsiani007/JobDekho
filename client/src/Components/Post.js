@@ -133,7 +133,7 @@ function Post({post,likedpost}){
       >
         {post.profilephoto?
         <img class="h-8 w-8 rounded-full cursor-pointer"
-        onClick={()=>{navigate(`/internprofile/${post.usernumber}`)}}
+        onClick={()=>{navigate(`/internprofile/${post.useremail}`)}}
         src={`${post.profilephoto}`}  
          alt="loading ..."/>
          :
@@ -143,7 +143,7 @@ function Post({post,likedpost}){
         }
         <div class="ml-3 ">
           <span
-          onClick={()=>{navigate(`/internprofile/${post.usernumber}`)}}
+          onClick={()=>{navigate(`/internprofile/${post.useremail}`)}}
           class="text-sm cursor-pointer font-semibold antialiased font-sans flex justify-start  leading-tight">{post.username}</span>
           <span class="text-gray-600 text-xs font-sans block">{moment(post.date).format("DD-MM-YYYY")}</span>
         </div>

@@ -2,12 +2,11 @@ import React from 'react'
 import { useEffect } from 'react';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon ,UserCircleIcon ,PowerIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, BellIcon, XMarkIcon ,UserCircleIcon ,PowerIcon,CameraIcon , VideoCameraIcon } from '@heroicons/react/24/outline'
 import Logo from './jobdekho.ico.png'
 import { Link } from 'react-router-dom'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import {useState} from 'react'
-import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
 
@@ -28,21 +27,12 @@ function Hire(){
         document.getElementById("postbutton").style.backgroundColor = ""
         document.getElementById("homebutton").style.color = "rgb(156 163 175)"
 
-        const getData = async()=>{
-            await  axiosPrivate.get(`http://localhost:4000/users`).then((response) => {
-              for(let i = 0;i<response.data.recordset.length;i++){
-           options = response.data.recordset.skills[i].split(',')
-              }
-              setOptions(options)
-            });
-           }
-
-           getData();
+       
       },[axiosPrivate,options]);
 
       const navigation = [
         { name: 'Home', href: 'http://localhost:3000/recruiterhome', current:true ,id:"homebutton" },
-        { name: 'Hire', href: 'http://localhost:3000/hirewithapplicants', current:false ,id:"gethiredbutton"},
+        { name: 'Shortlisted', href: 'http://localhost:3000/hirewithapplicants', current:false ,id:"gethiredbutton"},
         { name: 'Applicants', href: 'http://localhost:3000/applicants', current:false ,id:"projectsbutton"},
         { name: 'Post', href: 'http://localhost:3000/recruiterpostform', current:false ,id:"postbutton"},
       ]
@@ -106,24 +96,7 @@ function Hire(){
                   <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                 )}
               </Disclosure.Button>
-              <div className='mx-6'>
-              <StyledAutocomplete
-              size={"small"}
-              freeSolo
-              autoComplete
-              style={{ width: 300}}
-              //  className=' px-10  xl:w-[700px] lg:flex lg:w-[400px] h-10 text-lg bg-white  xl:flex rounded-2xl'
-            
-              options={options?options:[{label:"Loading..." }]}
-              renderInput={(params) => (
-              <TextField {...params}
-            //   onChange={getData}
-              style={{background:"white"}}
-               variant="outlined"
-              placeholder="Search here ..."
-              /> )}
-              />
-            </div>
+
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
@@ -153,30 +126,11 @@ function Hire(){
                       {item.name}
                     </Link>
                   ))}
+                  
+
                 </div>
               </div>
-              <div class="my-auto mx-auto"  id="search" >
-             
-             
-              <StyledAutocomplete
-              size={"small"}     
-              freeSolo
-              className='hidden lg:flex xl:w-[700px] lg:w-[400px]'
-              autoComplete
-              //  style={{ width: 700}}
-              //  className=' px-10  xl:w-[700px] lg:flex lg:w-[400px] h-10 text-lg bg-white  xl:flex rounded-2xl'
-              autoHighlight
-              options={options?options:[{label:"Loading..." }]}
-              renderInput={(params) => (
-              <TextField {...params}
-         
-               style={{background:"whitesmoke"}}
-               variant="outlined"
-              placeholder="Search here ..."
-              /> )}
-              />
-           
-            </div>
+              {/* textfield */}
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button
